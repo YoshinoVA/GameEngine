@@ -4,6 +4,7 @@
 #include "GLFW/glfw3.h"
 #include "soil/soil.h"
 #include "glm/glm.hpp"
+#include "Sprite.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include <fstream>
@@ -90,9 +91,9 @@ int main()
 	// math and numbers and stuff
 	GLfloat vertices[] = {
 		//  Position   Color             Texcoords
-		-0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
+		-0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, // Top-left
+		0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Top-right
+		0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
 		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
 	};
 
