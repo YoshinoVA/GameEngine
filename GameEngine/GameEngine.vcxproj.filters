@@ -31,7 +31,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Ba Sing Se.png">
+    <Image Include="Western Air Temple.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BaSingSe.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
