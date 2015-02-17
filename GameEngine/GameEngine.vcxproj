@@ -74,13 +74,17 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MathStuffandShit.cpp" />
+    <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="BaSingSe.png" />
     <Image Include="Western Air Temple.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MathStuffandShit.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

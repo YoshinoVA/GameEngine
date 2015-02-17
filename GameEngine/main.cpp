@@ -4,7 +4,6 @@
 #include "GLFW/glfw3.h"
 #include "soil/soil.h"
 #include "glm/glm.hpp"
-#include "Sprite.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include <fstream>
@@ -200,5 +199,4 @@ int main()
 	glfwTerminate();
 
 	return 0;
-}
-
+} 
