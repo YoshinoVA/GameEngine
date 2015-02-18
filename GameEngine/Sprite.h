@@ -8,7 +8,6 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include "GLOBALS.h"
 
 struct vertex
 {
