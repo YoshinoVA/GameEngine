@@ -6,6 +6,9 @@
 #include "soil/soil.h"
 #include "glm/glm.hpp"
 #include <vector>
+#include <string>
+#include <fstream>
+#include "GLOBALS.h"
 
 struct vertex
 {
@@ -20,11 +23,13 @@ class Sprite
 {
 	public:
 		Sprite(const char* a_file, float a_loc[2], int a_size[2], int a_BPP);
+		Sprite(const char* a_File);
 		~Sprite();
 		vertex vertices[4];
 		int spriteID;
 		unsigned int loadTexture(const char* a_file, int & a_width, int & a_height, int & a_BPP);
 		void Draw();
+		int bpp;
 		void Update(float a_DeltaTime);
 		std::vector<glm::vec2> UVlist;
 		GLuint uiVBO;

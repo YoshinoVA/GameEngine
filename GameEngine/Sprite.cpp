@@ -27,7 +27,7 @@ Sprite::Sprite(const char* a_file, float a_loc[2], int a_size[2], int a_BPP)
 {
 	int imageWidth = 0;
 	int imageHeight = 0;
-	int bpp = 4;
+	bpp = 4;
 	spriteID = loadTexture(a_file, imageWidth, imageHeight, bpp);
 
 	// loading UV data like 4 times

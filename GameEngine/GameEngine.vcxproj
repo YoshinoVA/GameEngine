@@ -84,6 +84,7 @@
     <Image Include="Western Air Temple.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GLOBALS.h" />
     <ClInclude Include="MathStuffandShit.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>

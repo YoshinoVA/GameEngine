@@ -54,5 +54,8 @@
     <ClInclude Include="MathStuffandShit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GLOBALS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
