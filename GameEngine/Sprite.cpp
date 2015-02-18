@@ -22,7 +22,6 @@ unsigned int Sprite::loadTexture(const char* a_file, int & a_Width, int & a_Heig
 		return uiTextureID;
 	}
 }
-
 Sprite::Sprite(const char* a_file, int width, int height)
 {
 	int imageWidth = 0;
@@ -45,7 +44,6 @@ Sprite::Sprite(const char* a_file, int width, int height)
 	glGenBuffers(1, &uiVBO);
 	glGenBuffers(1, &uiIBO);
 }
-
 void Sprite::UpdateUV(glm::vec2 vOne, glm::vec2 vTwo, glm::vec2 vThree, glm::vec2 vFour)
 {
 	vertices[0].uv = vOne;
@@ -53,7 +51,6 @@ void Sprite::UpdateUV(glm::vec2 vOne, glm::vec2 vTwo, glm::vec2 vThree, glm::vec
 	vertices[2].uv = vThree;
 	vertices[3].uv = vFour;
 }
-
 void Sprite::Draw()
 {
 	glEnable(GL_BLEND);
@@ -97,12 +94,19 @@ void Sprite::Draw()
 	glEnableVertexAttribArray(2);
 
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), 0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float)* 4));
-
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float)* 4));
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float)* 8));
 
 	glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_BYTE, NULL);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+Sprite::Sprite()
+{
+
+}
+Sprite::~Sprite()
+{
+
 }

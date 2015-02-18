@@ -35,12 +35,18 @@
     <ClCompile Include="MathStuffandShit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Animotion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Western Air Temple.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="BaSingSe.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Pictures\rock.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -52,6 +58,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animotion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

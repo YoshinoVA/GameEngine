@@ -7,6 +7,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "Sprite.h"
+#include "Animotion.h"
 #include <fstream>
 #include <iostream>
 #include <ctime>
@@ -14,15 +15,15 @@
 //vertex shader
 const GLchar* vertexSource =
 "#version 150 core\n"
-"in vec2 position;"
-"in vec3 color;"
+"in vec4 position;"
+"in vec4 color;"
 "in vec2 texcoord;"
 "out vec3 Color;"
 "out vec2 Texcoord;"
 "void main() {"
 "   Color = color;"
 "   Texcoord = texcoord;"
-"   gl_Position = vec4(position, 0.0, 1.0);"
+"   gl_Position = vec4(0.0, 0.0, 0.0, 1.0);"
 "}";
 const GLchar* fragmentSource =
 "#version 150 core\n"
@@ -32,6 +33,7 @@ const GLchar* fragmentSource =
 "uniform sampler2D tex;"
 "void main() {"
 "   outColor = texture(tex, Texcoord) * vec4(Color, 1.0);"
+"	outColor = vec4(1.0,1.0,1.0,1.0);"
 "}";
 
 //test shaders
@@ -72,6 +74,22 @@ void Animotion::DrawSprite(unsigned int s)
 {
 	SpriteList[s].Draw();
 }
+void Animotion::MoveSprite(unsigned int s, float x, float y)
+{
+	SpriteList[s].x = x;
+	SpriteList[s].y = y;
+	UpdateVertex(s);
+}
+void Animotion::UpdateVertex(unsigned int s)
+{
+	SpriteList[s].vertices[0].Position = glm::vec4(SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 0, 1);
+	SpriteList[s].vertices[1].Position = glm::vec4(SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 0, 1);
+	SpriteList[s].vertices[2].Position = glm::vec4(SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 0, 1);
+	SpriteList[s].vertices[3].Position = glm::vec4(SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 0, 1);
+}
+
+Animotion Engine;
+
 int main()
 {
 	glfwInit();
@@ -83,13 +101,19 @@ int main()
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Aloha World", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(1024, 720, "I'm really feeling it", nullptr, nullptr);
 	//GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL", glfwGetPrimaryMonitor(), nullptr);
 
 	glfwMakeContextCurrent(window);
 
 	glewExperimental = GL_TRUE;
 	glewInit();
+
+	float x, y;
+	x = y = 400;
+	float speed = 250.f;
+
+	unsigned int r = Engine.CreateSprite("rock.png", 50, 54);
 
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
@@ -174,6 +198,7 @@ int main()
 		infoLog = (char *)malloc(infologLength);
 		glGetProgramInfoLog(shaderProgram, infologLength, &charsWritten, infoLog);
 		printf("%s\n", infoLog);
+
 		free(infoLog);
 	}
 	else
@@ -184,11 +209,14 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		// Clear the screen to black
-		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+		glClearColor(0.1f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Draw a rectangle from the 2 triangles using 6 indices
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		// Draw a bunch of rocks and shit
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glUseProgram(shaderProgram);
+		Engine.MoveSprite(r, x, y);
+		Engine.DrawSprite(r);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
