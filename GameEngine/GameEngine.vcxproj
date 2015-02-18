@@ -74,7 +74,6 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathStuffandShit.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -86,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="MathStuffandShit.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

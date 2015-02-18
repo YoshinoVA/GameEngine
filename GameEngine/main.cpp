@@ -6,6 +6,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "Sprite.h"
 #include <fstream>
 #include <iostream>
 #include <ctime>
@@ -60,6 +61,16 @@ float radianToDegrees(float radians)
 	returnNumber = radians * 180 / 3.14;
 
 	return returnNumber;
+}
+unsigned int Animotion::CreateSprite(const char* a_fileName, int width, int height)
+{
+	Sprite s(a_fileName, width, height);
+	SpriteList.emplace_back(s);
+	return SpriteList.size() - 1;
+}
+void Animotion::DrawSprite(unsigned int s)
+{
+	SpriteList[s].Draw();
 }
 int main()
 {
