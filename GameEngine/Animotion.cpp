@@ -52,12 +52,7 @@ void Animotion::loadAnimotionUV(const char* a_File, AnimationType currentState)
 	}
 	MappedFrames.emplace(std::pair<AnimationType, std::vector<frame>>(currentState, FramesAnimated));
 }
-
-void Animotion::playAnimation(AnimationType desiredState)
-{
-	AnimatingSpriteMap[desiredState].UpdateUV(MappedFrames[desiredState][0].One_uv,
-		MappedFrames[desiredState][0].Two_uv,
-		MappedFrames[desiredState][0].Three_uv,
-		MappedFrames[desiredState][0].Four_uv);
-		AnimatingSpriteMap[desiredState].Draw();
-}
+//void Animotion::playAnimation(AnimationType desiredState)
+//{
+//
+//}

@@ -14,10 +14,9 @@
 
 struct vertex
 {
-	glm::vec4 Position;
-	glm::vec4 color;
-	glm::vec2 uv;
-	float UVx, UVy, UVz, UVw;
+	float Position;
+	float color;
+	float uv;
 };
 
 class Sprite
@@ -27,7 +26,6 @@ class Sprite
 		Sprite(const char* a_File);
 		Sprite();
 		~Sprite();
-		vertex vertices[4];
 		int spriteID;
 		unsigned int loadTexture(const char* a_file, int & a_width, int & a_height, int & a_BPP);
 		void Draw();
@@ -36,8 +34,6 @@ class Sprite
 		std::vector<glm::vec2> UVlist;
 		GLuint uiVBO;
 		GLuint uiIBO;
-
-		void UpdateUV(glm::vec2 vOne, glm::vec2 vTwo, glm::vec2 vThree, glm::vec2 vFour);
 };
 
 #endif

@@ -18,25 +18,25 @@ const GLchar* vertexSource =
 "in vec4 position;"
 "in vec4 color;"
 "in vec2 texcoord;"
-"out vec3 Color;"
+"out vec4 Color;"
 "out vec2 Texcoord;"
 "void main() {"
 "   Color = color;"
 "   Texcoord = texcoord;"
-"   gl_Position = vec4(0.0, 0.0, 0.0, 1.0);"
+"   gl_Position = position;"
 "}";
 const GLchar* fragmentSource =
 "#version 150 core\n"
-"in vec3 Color;"
+"in vec4 Color;"
 "in vec2 Texcoord;"
 "out vec4 outColor;"
 "uniform sampler2D tex;"
 "void main() {"
-"   outColor = texture(tex, Texcoord) * vec4(Color, 1.0);"
-"	outColor = vec4(1.0,1.0,1.0,1.0);"
+"   outColor = texture(tex, Texcoord) * vec4(Color);"
 "}";
 
-//test shaders
+vertex vertices[4];
+
 static bool printShaderInfoLog(GLuint obj)
 {
 	int infologLength = 0;
@@ -82,10 +82,10 @@ void Animotion::MoveSprite(unsigned int s, float x, float y)
 }
 void Animotion::UpdateVertex(unsigned int s)
 {
-	SpriteList[s].vertices[0].Position = glm::vec4(SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 0, 1);
-	SpriteList[s].vertices[1].Position = glm::vec4(SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 0, 1);
-	SpriteList[s].vertices[2].Position = glm::vec4(SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 0, 1);
-	SpriteList[s].vertices[3].Position = glm::vec4(SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 0, 1);
+	vertices[0].Position = SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 0, 0;
+	vertices[1].Position = SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 0, 1;
+	vertices[2].Position = SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 1, 1;
+	vertices[3].Position = SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 1, 0;
 }
 
 Animotion Engine;
@@ -113,8 +113,6 @@ int main()
 	x = y = 400;
 	float speed = 250.f;
 
-	unsigned int r = Engine.CreateSprite("rock.png", 50, 54);
-
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -131,6 +129,9 @@ int main()
 		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
 	};
 
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
 	GLuint ebo;
 	glGenBuffers(1, &ebo);
 
@@ -138,9 +139,8 @@ int main()
 		0, 1, 2,
 		2, 3, 0
 	};
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
 	//compile shaders
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -154,7 +154,7 @@ int main()
 	GLuint shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
-	glBindFragDataLocation(shaderProgram, 0, "outColor");
+//	glBindFragDataLocation(shaderProgram, 0, "outColor");
 	glLinkProgram(shaderProgram);
 	glUseProgram(shaderProgram);
 
@@ -170,21 +170,10 @@ int main()
 	glEnableVertexAttribArray(texAttrib);
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
 	GLuint tex;
 	glGenTextures(1, &tex);
 
-	int width, height;
-	unsigned char* image = SOIL_load_image("Western Air Temple.png", &width, &height, 0, SOIL_LOAD_RGB);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-	SOIL_free_image_data(image);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	unsigned int r = Engine.CreateSprite("rock.png", 50, 54);
 
 	printShaderInfoLog(vertexShader);
 	printShaderInfoLog(fragmentShader);
@@ -205,7 +194,6 @@ int main()
 	{
 		printf("djhkfgal");
 	}
-
 	while (!glfwWindowShouldClose(window))
 	{
 		// Clear the screen to black
@@ -213,15 +201,14 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw a bunch of rocks and shit
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glUseProgram(shaderProgram);
+		/*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
 		Engine.MoveSprite(r, x, y);
 		Engine.DrawSprite(r);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-
 	glDeleteProgram(shaderProgram);
 	glDeleteShader(fragmentShader);
 	glDeleteShader(vertexShader);

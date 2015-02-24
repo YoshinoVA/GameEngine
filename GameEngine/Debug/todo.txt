@@ -1,0 +1,9 @@
+steps (do this all from 9 am to 5 pm or else I'll fail)
+1. write vertices data to sprite class
+2. impliment vertices data into buffers
+3. call buffer data wtih vertices data
+4. update UVlist
+5. finish animation
+6. finish font writing
+7. turn in and pass
+
