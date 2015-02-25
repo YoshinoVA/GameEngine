@@ -14,34 +14,30 @@
 
 struct vertex
 {
-	float Position;
-	float color;
-	float uv;
+	float Position[4];
+	float color[4];
+	float uv[2];
 };
 
 class Sprite
 {
 	public:
 		Sprite(const char* a_file, int width, int height);
-		Sprite(const char* a_File);
 		Sprite();
 		~Sprite();
+		void LoadTexture(const char* a_Texture);
 		int spriteID;
-		unsigned int loadTexture(const char* a_file, int & a_width, int & a_height, int & a_BPP);
 		void Draw();
-		int bpp;
-		float x, y, sWidth, sHeight;
-		std::vector<glm::vec2> UVlist;
+		float x = 25;
+		float y = 25;
+		vertex vertices[4];
+		GLuint uiShaderProg;
 		GLuint uiVBO;
 		GLuint uiIBO;
+		GLuint uiVAO;
+		GLuint TexThing;
 
-		GLfloat Vertex() 
-		{
-			-0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f; // Top-left
-			0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f; // Top-right
-			0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f; // Bottom-right
-			-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f;  // Bottom-left
-		};
+		GLuint texLocation;
 };
 
 #endif

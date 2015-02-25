@@ -24,6 +24,7 @@ const GLchar* vertexSource =
 "   Color = color;"
 "   Texcoord = texcoord;"
 "   gl_Position = position;"
+//"	gl_Position = vec4(0.0, 0.0, 0.0, 1.0);"
 "}";
 const GLchar* fragmentSource =
 "#version 150 core\n"
@@ -32,10 +33,8 @@ const GLchar* fragmentSource =
 "out vec4 outColor;"
 "uniform sampler2D tex;"
 "void main() {"
-"   outColor = texture(tex, Texcoord) * vec4(Color);"
+"	outColor = Color;"
 "}";
-
-vertex vertices[4];
 
 static bool printShaderInfoLog(GLuint obj)
 {
@@ -53,94 +52,23 @@ static bool printShaderInfoLog(GLuint obj)
 		free(infoLog);
 		return false;
 	}
+	else
+	{
+		printf("Info log was empty\n");
+	}
 	return true;
 }
-float radianToDegrees(float radians)
-{
-	float returnNumber;
-
-	// degrees to radian
-	returnNumber = radians * 180 / 3.14;
-
-	return returnNumber;
-}
-unsigned int Animotion::CreateSprite(const char* a_fileName, int width, int height)
-{
-	Sprite s(a_fileName, width, height);
-	SpriteList.emplace_back(s);
-	return SpriteList.size() - 1;
-}
-void Animotion::DrawSprite(unsigned int s)
-{
-	SpriteList[s].Draw();
-}
-void Animotion::MoveSprite(unsigned int s, float x, float y)
-{
-	SpriteList[s].x = x;
-	SpriteList[s].y = y;
-	UpdateVertex(s);
-}
-void Animotion::UpdateVertex(unsigned int s)
-{
-	vertices[0].Position = SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 0, 0;
-	vertices[1].Position = SpriteList[s].x - SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 0, 1;
-	vertices[2].Position = SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y + SpriteList[s].sHeight, 1, 1;
-	vertices[3].Position = SpriteList[s].x + SpriteList[s].sWidth, SpriteList[s].y - SpriteList[s].sHeight, 1, 0;
-}
-
-Animotion Engine;
 
 int main()
 {
 	glfwInit();
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
 	GLFWwindow* window = glfwCreateWindow(1024, 720, "I'm really feeling it", nullptr, nullptr);
-	//GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL", glfwGetPrimaryMonitor(), nullptr);
 
 	glfwMakeContextCurrent(window);
 
 	glewExperimental = GL_TRUE;
-	glewInit();
-
-	float x, y;
-	x = y = 400;
-	float speed = 250.f;
-
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-
-	// math and numbers and stuff
-	GLfloat vertices[] = {
-		//  Position   Color             Texcoords
-		-0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, // Top-left
-		0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Top-right
-		0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
-	};
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	GLuint ebo;
-	glGenBuffers(1, &ebo);
-
-	GLuint elements[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+	glewInit() != GLEW_OK;
 
 	//compile shaders
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -151,72 +79,44 @@ int main()
 	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
 	glCompileShader(fragmentShader);
 
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-//	glBindFragDataLocation(shaderProgram, 0, "outColor");
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), 0);
-
-	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(2 * sizeof(float)));
-
-	GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
-	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(5 * sizeof(float)));
-
-	GLuint tex;
-	glGenTextures(1, &tex);
-
-	unsigned int r = Engine.CreateSprite("rock.png", 50, 54);
-
+	// get debugging info for shaders
 	printShaderInfoLog(vertexShader);
 	printShaderInfoLog(fragmentShader);
 
-	int infologLength = 0;
-	int charsWritten = 0;
-	char *infoLog;
-	glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &infologLength);
-	if (infologLength > 0)
-	{
-		infoLog = (char *)malloc(infologLength);
-		glGetProgramInfoLog(shaderProgram, infologLength, &charsWritten, infoLog);
-		printf("%s\n", infoLog);
+	// compile shaderprogram
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
 
-		free(infoLog);
-	}
-	else
-	{
-		printf("djhkfgal");
-	}
+	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
+
+	//gameworks
+	Sprite* s = new Sprite();
+	s->uiShaderProg = shaderProgram;
+	s->LoadTexture("rock.png");
+	//unsigned int r = Engine.CreateSprite("rock.png", 50, 54, shaderProgram);
+
+	printf("Begin game loop\n");
+
 	while (!glfwWindowShouldClose(window))
 	{
+		glfwSwapBuffers(window);
+
 		// Clear the screen to black
-		glClearColor(0.1f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.1f, 0.4f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw a bunch of rocks and shit
 		glUseProgram(shaderProgram);
-		/*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
-		Engine.MoveSprite(r, x, y);
-		Engine.DrawSprite(r);
-
-		glfwSwapBuffers(window);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		s->Draw();
+		
 		glfwPollEvents();
 	}
 	glDeleteProgram(shaderProgram);
 	glDeleteShader(fragmentShader);
 	glDeleteShader(vertexShader);
-
-	glDeleteBuffers(1, &ebo);
-	glDeleteBuffers(1, &vbo);
-
-	glDeleteVertexArrays(1, &vao);
 
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

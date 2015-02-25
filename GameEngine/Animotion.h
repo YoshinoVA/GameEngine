@@ -27,7 +27,7 @@ public:
 	int hDirection, vDirection;
 	double currentFrame, deltaTime, lastFrame = 0;
 	std::vector<Sprite> SpriteList;
-	unsigned int CreateSprite(const char* a_fileName, int width, int height);
+	unsigned int CreateSprite(const char* a_fileName, int width, int height,unsigned int shader);
 	void DrawSprite(unsigned int s);
 	void MoveSprite(unsigned int s, float x, float y);
 	void UpdateVertex(unsigned int s);

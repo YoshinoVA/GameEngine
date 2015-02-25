@@ -52,6 +52,32 @@ void Animotion::loadAnimotionUV(const char* a_File, AnimationType currentState)
 	}
 	MappedFrames.emplace(std::pair<AnimationType, std::vector<frame>>(currentState, FramesAnimated));
 }
+unsigned int Animotion::CreateSprite(const char* a_fileName, int width, int height, unsigned int shader)
+{
+
+	Sprite s = Sprite(a_fileName, width, height);
+	s.uiShaderProg = shader;
+	SpriteList.push_back(s);
+
+	return SpriteList.size() - 1;
+
+}
+void Animotion::DrawSprite(unsigned int s)
+{
+	SpriteList[s].Draw();
+}
+void Animotion::MoveSprite(unsigned int s, float x, float y)
+{
+	SpriteList[s].x = x;
+	SpriteList[s].y = y;
+	UpdateVertex(s);
+}
+void Animotion::UpdateVertex(unsigned int s)
+{
+
+}
+
+
 //void Animotion::playAnimation(AnimationType desiredState)
 //{
 //
