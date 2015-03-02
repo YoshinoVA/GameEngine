@@ -31,6 +31,7 @@ public:
 	void DrawSprite(unsigned int s);
 	void MoveSprite(unsigned int s, float x, float y);
 	void UpdateVertex(unsigned int s);
+	void UpdateAnimotion(unsigned int s);
 
 	std::vector<frame> FramesAnimated;
 	std::map<AnimationType, std::vector<frame>>MappedFrames;

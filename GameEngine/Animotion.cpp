@@ -54,13 +54,11 @@ void Animotion::loadAnimotionUV(const char* a_File, AnimationType currentState)
 }
 unsigned int Animotion::CreateSprite(const char* a_fileName, int width, int height, unsigned int shader)
 {
-
 	Sprite s = Sprite(a_fileName, width, height);
 	s.uiShaderProg = shader;
 	SpriteList.push_back(s);
 
 	return SpriteList.size() - 1;
-
 }
 void Animotion::DrawSprite(unsigned int s)
 {
@@ -76,9 +74,7 @@ void Animotion::UpdateVertex(unsigned int s)
 {
 
 }
-
-
-//void Animotion::playAnimation(AnimationType desiredState)
-//{
-//
-//}
+void Animotion::UpdateAnimotion(unsigned int s)
+{
+	//SpriteList[s].vertices[0].uv[0] = 0;
+}

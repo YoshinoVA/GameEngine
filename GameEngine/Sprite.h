@@ -28,8 +28,8 @@ class Sprite
 		void LoadTexture(const char* a_Texture);
 		int spriteID;
 		void Draw();
-		float x = 25;
-		float y = 25;
+		float x;
+		float y;
 		vertex vertices[4];
 		GLuint uiShaderProg;
 		GLuint uiVBO;

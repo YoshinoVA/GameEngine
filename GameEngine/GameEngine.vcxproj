@@ -80,8 +80,9 @@
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\..\Pictures\rock.png" />
     <Image Include="BaSingSe.png" />
+    <Image Include="cirno walk.png" />
+    <Image Include="rock.png" />
     <Image Include="Western Air Temple.png" />
   </ItemGroup>
   <ItemGroup>

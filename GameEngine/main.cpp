@@ -15,25 +15,24 @@
 //vertex shader
 const GLchar* vertexSource =
 "#version 150 core\n"
-"in vec4 position;"
-"in vec4 color;"
+"in vec2 position;"
+"in vec3 color;"
 "in vec2 texcoord;"
-"out vec4 Color;"
+"out vec3 Color;"
 "out vec2 Texcoord;"
 "void main() {"
 "   Color = color;"
 "   Texcoord = texcoord;"
-"   gl_Position = position;"
-//"	gl_Position = vec4(0.0, 0.0, 0.0, 1.0);"
+"   gl_Position = vec4(position, 0.0, 1.0);"
 "}";
 const GLchar* fragmentSource =
 "#version 150 core\n"
-"in vec4 Color;"
+"in vec3 Color;"
 "in vec2 Texcoord;"
 "out vec4 outColor;"
 "uniform sampler2D tex;"
 "void main() {"
-"	outColor = Color;"
+"   outColor = texture(tex, Texcoord) * vec4(Color, 1.0);"
 "}";
 
 static bool printShaderInfoLog(GLuint obj)
@@ -95,9 +94,10 @@ int main()
 	Sprite* s = new Sprite();
 	s->uiShaderProg = shaderProgram;
 	s->LoadTexture("rock.png");
-	//unsigned int r = Engine.CreateSprite("rock.png", 50, 54, shaderProgram);
 
-	printf("Begin game loop\n");
+	/*Sprite* c = new Sprite();
+	c->uiShaderProg = shaderProgram;
+	c->LoadTexture("cirno walk.png");*/
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -111,6 +111,7 @@ int main()
 		glUseProgram(shaderProgram);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		s->Draw();
+		//c->Draw();
 		
 		glfwPollEvents();
 	}

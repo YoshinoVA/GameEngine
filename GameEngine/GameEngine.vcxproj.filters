@@ -46,7 +46,10 @@
     <Image Include="BaSingSe.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\..\..\..\Pictures\rock.png">
+    <Image Include="rock.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="cirno walk.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

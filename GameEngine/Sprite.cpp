@@ -3,6 +3,10 @@
 
 Sprite::Sprite(const char* a_file, int width, int height) : Sprite()
 {
+
+}
+void Sprite::Draw()
+{
 	// vertex 1
 	vertices[0].Position[0] = -.5f;
 	vertices[0].Position[1] = 0.5;
@@ -51,31 +55,29 @@ Sprite::Sprite(const char* a_file, int width, int height) : Sprite()
 	vertices[3].uv[0] = 1;
 	vertices[3].uv[1] = 0;
 
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
+
 	glGenBuffers(1, &uiVBO);
 	glGenBuffers(1, &uiIBO);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
-	
+
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
-	GLuint elements[] =
-	{
-		0, 1, 2, 3
+	GLuint elements[] = {
+		0, 1, 2,
+		2, 3, 0
 	};
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &uiVAO);
 	glBindVertexArray(uiVAO);
 
-}
-void Sprite::Draw()
-{
-	glEnable(GL_BLEND);
-	glEnable(GL_ALPHA_TEST);
-
 	glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
-	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
 	glBindVertexArray(uiVAO);
 	glBindTexture(GL_TEXTURE_2D, spriteID);
@@ -96,8 +98,6 @@ void Sprite::Draw()
 	glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float)* 4));
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float)* 8));
 
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, 0);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindTexture(GL_TEXTURE_2D, TexThing);
@@ -117,12 +117,10 @@ void Sprite::LoadTexture(const char* a_Texture)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	texLocation = glGetUniformLocation(uiShaderProg, "difTex");
+	//texLocation = glGetUniformLocation(uiShaderProg, "difTex");
 }
 Sprite::Sprite()
 {
