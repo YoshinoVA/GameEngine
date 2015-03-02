@@ -82,7 +82,7 @@
   <ItemGroup>
     <Image Include="BaSingSe.png" />
     <Image Include="cirno walk.png" />
-    <Image Include="rock.png" />
+    <Image Include="ice.png" />
     <Image Include="Western Air Temple.png" />
   </ItemGroup>
   <ItemGroup>

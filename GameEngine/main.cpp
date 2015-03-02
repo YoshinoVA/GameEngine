@@ -91,27 +91,27 @@ int main()
 	glUseProgram(shaderProgram);
 
 	//gameworks
-	Sprite* s = new Sprite();
+	/*Sprite* s = new Sprite();
 	s->uiShaderProg = shaderProgram;
-	s->LoadTexture("rock.png");
+	s->LoadTexture("ice.png");*/
 
-	/*Sprite* c = new Sprite();
+	Sprite* c = new Sprite();
 	c->uiShaderProg = shaderProgram;
-	c->LoadTexture("cirno walk.png");*/
+	c->LoadTexture("cirno walk.png");
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwSwapBuffers(window);
 
 		// Clear the screen to black
-		glClearColor(0.1f, 0.4f, 0.0f, 1.0f);
+		glClearColor(0.1f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw a bunch of rocks and shit
 		glUseProgram(shaderProgram);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		s->Draw();
-		//c->Draw();
+		//s->Draw();
+		c->Draw();
 		
 		glfwPollEvents();
 	}

@@ -1,9 +1,21 @@
-﻿Build started 3/2/2015 12:49:15 PM.
+﻿Build started 3/2/2015 2:29:59 PM.
      1>Project "C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\GameEngine.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(1): warning C4005: 'GLEW_STATIC' : macro redefinition
+                 command-line arguments :  see previous definition of 'GLEW_STATIC'
+     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
+                 c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\include\glfw\glfw3.h(96) : see previous definition of 'APIENTRY'
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(70): warning C4552: '!=' : operator has no effect; expected operator with side-effect
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\Debug\GameEngine.exe" /INCREMENTAL /NOLOGO glfw3.lib opengl32.lib glew32s.lib SOIL.lib tinyxml2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\Debug\GameEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\Debug\GameEngine.lib" /MACHINE:X86 Debug\Animotion.obj
+         Debug\main.obj
+         Debug\MathStuffandShit.obj
+         Debug\Sprite.obj
          GameEngine.vcxproj -> C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\Debug\GameEngine.exe
      1>Done Building Project "C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\GameEngine.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.05
+Time Elapsed 00:00:01.18

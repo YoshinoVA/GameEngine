@@ -8,7 +8,7 @@ Sprite::Sprite(const char* a_file, int width, int height) : Sprite()
 void Sprite::Draw()
 {
 	// vertex 1
-	vertices[0].Position[0] = -.5f;
+	vertices[0].Position[0] = -0.5f;
 	vertices[0].Position[1] = 0.5;
 	vertices[0].Position[2] = 0;
 	vertices[0].Position[3] = 1;
@@ -20,8 +20,8 @@ void Sprite::Draw()
 	vertices[0].uv[1] = 0;
 
 	//vertex 2
-	vertices[1].Position[0] = .5f;
-	vertices[1].Position[1] = .5;
+	vertices[1].Position[0] = 0.5f;
+	vertices[1].Position[1] = 0.5;
 	vertices[1].Position[2] = 0;
 	vertices[1].Position[3] = 1;
 	vertices[1].color[0] = 1;
@@ -120,7 +120,7 @@ void Sprite::LoadTexture(const char* a_Texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	//texLocation = glGetUniformLocation(uiShaderProg, "difTex");
+	texLocation = glGetUniformLocation(uiShaderProg, "difTex");
 }
 Sprite::Sprite()
 {
