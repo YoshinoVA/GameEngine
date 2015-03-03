@@ -95,9 +95,12 @@ int main()
 	s->uiShaderProg = shaderProgram;
 	s->LoadTexture("ice.png");*/
 
-	Sprite* c = new Sprite();
+	/*Sprite* c = new Sprite();
 	c->uiShaderProg = shaderProgram;
-	c->LoadTexture("cirno walk.png");
+	c->LoadTexture("cirno walk.png");*/
+
+	Animotion* w = new Animotion();
+	w->CreateSprite("cirno walk.png", 406, 58, shaderProgram);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -109,17 +112,16 @@ int main()
 
 		// Draw a bunch of rocks and shit
 		glUseProgram(shaderProgram);
-		c->Draw();
+		//c->Draw();
+		w->DrawSprite(walk);
 		
 		//s->Draw();
-		
 		
 		glfwPollEvents();
 	}
 	glDeleteProgram(shaderProgram);
 	glDeleteShader(fragmentShader);
 	glDeleteShader(vertexShader);
-
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);

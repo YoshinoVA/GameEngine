@@ -72,9 +72,10 @@ void Animotion::MoveSprite(unsigned int s, float x, float y)
 }
 void Animotion::UpdateVertex(unsigned int s)
 {
-
+	SpriteList[s].vertices[0].uv[0] = 0;
+	SpriteList[s].vertices[0].uv[1] = 1;
 }
-void Animotion::UpdateAnimotion(unsigned int s)
+void Animotion::UpdateAnimotion()
 {
-	//SpriteList[s].vertices[0].uv[0] = 0;
+	deltaTime = currentFrame - lastFrame;
 }
