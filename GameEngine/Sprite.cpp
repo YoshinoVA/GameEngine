@@ -9,51 +9,51 @@ void Sprite::Draw()
 {
 	// vertex 1
 	vertices[0].Position[0] = -0.5f;
-	vertices[0].Position[1] = 0.5;
-	vertices[0].Position[2] = 0;
-	vertices[0].Position[3] = 1;
-	vertices[0].color[0] = 1;
-	vertices[0].color[1] = 1;
-	vertices[0].color[2] = 1;
-	vertices[0].color[3] = 1;
-	vertices[0].uv[0] = 0;
-	vertices[0].uv[1] = 0;
+	vertices[0].Position[1] = 0.5f;
+	vertices[0].Position[2] = 0.0f;
+	vertices[0].Position[3] = 1.0f;
+	vertices[0].color[0] = 1.0f;
+	vertices[0].color[1] = 1.0f;
+	vertices[0].color[2] = 1.0f;
+	vertices[0].color[3] = 1.0f;
+	vertices[0].uv[0] = 0.0f;
+	vertices[0].uv[1] = 0.0f;
 
 	//vertex 2
 	vertices[1].Position[0] = 0.5f;
 	vertices[1].Position[1] = 0.5;
-	vertices[1].Position[2] = 0;
-	vertices[1].Position[3] = 1;
-	vertices[1].color[0] = 1;
-	vertices[1].color[1] = 1;
-	vertices[1].color[2] = 1;
-	vertices[1].color[3] = 1;
-	vertices[1].uv[0] = 0;
-	vertices[1].uv[1] = 1;
+	vertices[1].Position[2] = 0.0f;
+	vertices[1].Position[3] = 1.0f;
+	vertices[1].color[0] = 1.0f;
+	vertices[1].color[1] = 1.0f;
+	vertices[1].color[2] = 1.0f;
+	vertices[1].color[3] = 1.0f;
+	vertices[1].uv[0] = 1.0f;
+	vertices[1].uv[1] = 0.0f;
 
 	//vertex 3
 	vertices[2].Position[0] = 0.5f;
 	vertices[2].Position[1] = -0.5f;
-	vertices[2].Position[2] = 0;
-	vertices[2].Position[3] = 1;
-	vertices[2].color[0] = 1;
-	vertices[2].color[1] = 1;
-	vertices[2].color[2] = 1;
-	vertices[2].color[3] = 1;
-	vertices[2].uv[0] = 1;
-	vertices[2].uv[1] = 1;
+	vertices[2].Position[2] = 0.0f;
+	vertices[2].Position[3] = 1.0f;
+	vertices[2].color[0] = 1.0f;
+	vertices[2].color[1] = 1.0f;
+	vertices[2].color[2] = 1.0f;
+	vertices[2].color[3] = 1.0f;
+	vertices[2].uv[0] = 1.0f;
+	vertices[2].uv[1] = 1.0f;
 
 	//vertex 4
 	vertices[3].Position[0] = -0.5f;
 	vertices[3].Position[1] = -0.5f;
-	vertices[3].Position[2] = 0;
-	vertices[3].Position[3] = 1;
-	vertices[3].color[0] = 1;
-	vertices[3].color[1] = 1;
-	vertices[3].color[2] = 1;
-	vertices[3].color[3] = 1;
-	vertices[3].uv[0] = 1;
-	vertices[3].uv[1] = 0;
+	vertices[3].Position[2] = 0.0f;
+	vertices[3].Position[3] = 1.0f;
+	vertices[3].color[0] = 1.0f;
+	vertices[3].color[1] = 1.0f;
+	vertices[3].color[2] = 1.0f;
+	vertices[3].color[3] = 1.0f;
+	vertices[3].uv[0] = 0.0f;
+	vertices[3].uv[1] = 1.0f;
 
 	glEnable(GL_BLEND);
 	glEnable(GL_ALPHA_TEST);
@@ -103,6 +103,8 @@ void Sprite::Draw()
 	glBindTexture(GL_TEXTURE_2D, TexThing);
 
 	glUniform1i(texLocation, 0);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 void Sprite::LoadTexture(const char* a_Texture)
 {
@@ -112,9 +114,9 @@ void Sprite::LoadTexture(const char* a_Texture)
 	glActiveTexture(GL_TEXTURE0);
 
 	int width, height;
-	unsigned char* image = SOIL_load_image(a_Texture, &width, &height, 0, SOIL_LOAD_RGB);
+	unsigned char* image = SOIL_load_image(a_Texture, &width, &height, 0, SOIL_LOAD_RGBA);
 	glBindTexture(GL_TEXTURE_2D, TexThing);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
