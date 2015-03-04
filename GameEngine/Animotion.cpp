@@ -73,7 +73,7 @@ void Animotion::MoveSprite(unsigned int s, float x, float y)
 void Animotion::UpdateVertex(unsigned int s)
 {
 	SpriteList[s].vertices[0].uv[0] = 0;
-	SpriteList[s].vertices[0].uv[1] = 1;
+	SpriteList[s].vertices[0].uv[1] = 0.2;
 }
 void Animotion::UpdateAnimotion()
 {

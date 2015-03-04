@@ -41,6 +41,8 @@ public:
 
 	void loadAnimotionUV(const char* a_File, AnimationType currentState);
 	void playAnimation(AnimationType desiredState);
+	void createAnimotion(const char* a_File, AnimationType currentState, float width, float height);
+
 
 	void dumptostdout(const char* a_File);
 };
