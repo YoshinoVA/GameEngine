@@ -62,7 +62,10 @@ int main()
 {
 	glfwInit();
 
-	GLFWwindow* window = glfwCreateWindow(1024, 720, "I'm really feeling it", nullptr, nullptr);
+	int screenWidth = 1024;
+	int screenHeight = 720;
+
+	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, "I'm really feeling it", nullptr, nullptr);
 
 	glfwMakeContextCurrent(window);
 
@@ -99,8 +102,8 @@ int main()
 	c->uiShaderProg = shaderProgram;
 	c->LoadTexture("cirno walk.png");*/
 
-	Animotion* w = new Animotion();
-	w->CreateSprite("cirno walk.png", 406, 58, shaderProgram);
+	Animotion* q = new Animotion();
+	q->spriteID = q->CreateSprite("cirno walk.png", 406, 58, shaderProgram);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -113,8 +116,8 @@ int main()
 		// Draw a bunch of rocks and shit
 		glUseProgram(shaderProgram);
 		//c->Draw();
-		w->DrawSprite(walk);
-		
+		q->MoveSprite(q->spriteID, 406, 58);
+		q->DrawSprite(q->spriteID);
 		//s->Draw();
 		
 		glfwPollEvents();

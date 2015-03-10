@@ -1,15 +1,13 @@
 #include "Sprite.h"
 
 
-Sprite::Sprite(const char* a_file, int width, int height) : Sprite()
+Sprite::Sprite(const char* a_file, int width, int height)
 {
+	printf("That's a sprite, I think\n");
 
-}
-void Sprite::Draw()
-{
 	// vertex 1
-	vertices[0].Position[0] = -0.5f;
-	vertices[0].Position[1] = 0.5f;
+	vertices[0].Position[0] = x + width *0.5;
+	vertices[0].Position[1] = y + height *0.5;
 	vertices[0].Position[2] = 0.0f;
 	vertices[0].Position[3] = 1.0f;
 	vertices[0].color[0] = 1.0f;
@@ -20,8 +18,8 @@ void Sprite::Draw()
 	vertices[0].uv[1] = 0.0f;
 
 	//vertex 2
-	vertices[1].Position[0] = 0.5f;
-	vertices[1].Position[1] = 0.5;
+	vertices[1].Position[0] = x - width *0.5;
+	vertices[1].Position[1] = y + height *0.5;
 	vertices[1].Position[2] = 0.0f;
 	vertices[1].Position[3] = 1.0f;
 	vertices[1].color[0] = 1.0f;
@@ -32,8 +30,8 @@ void Sprite::Draw()
 	vertices[1].uv[1] = 0.0f;
 
 	//vertex 3
-	vertices[2].Position[0] = 0.5f;
-	vertices[2].Position[1] = -0.5f;
+	vertices[2].Position[0] = x + width *0.5;
+	vertices[2].Position[1] = y - height *0.5;
 	vertices[2].Position[2] = 0.0f;
 	vertices[2].Position[3] = 1.0f;
 	vertices[2].color[0] = 1.0f;
@@ -44,8 +42,8 @@ void Sprite::Draw()
 	vertices[2].uv[1] = 1.0f;
 
 	//vertex 4
-	vertices[3].Position[0] = -0.5f;
-	vertices[3].Position[1] = -0.5f;
+	vertices[3].Position[0] = x - width *0.5;
+	vertices[3].Position[1] = y - height *0.5;
 	vertices[3].Position[2] = 0.0f;
 	vertices[3].Position[3] = 1.0f;
 	vertices[3].color[0] = 1.0f;
@@ -54,9 +52,6 @@ void Sprite::Draw()
 	vertices[3].color[3] = 1.0f;
 	vertices[3].uv[0] = 0.0f;
 	vertices[3].uv[1] = 1.0f;
-
-	glEnable(GL_BLEND);
-	glEnable(GL_ALPHA_TEST);
 
 	glGenBuffers(1, &uiVBO);
 	glGenBuffers(1, &uiIBO);
@@ -76,6 +71,13 @@ void Sprite::Draw()
 
 	glGenVertexArrays(1, &uiVAO);
 	glBindVertexArray(uiVAO);
+
+	spriteID = LoadTexture(a_file);
+}
+void Sprite::Draw()
+{
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
 
 	glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
@@ -106,7 +108,7 @@ void Sprite::Draw()
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
-void Sprite::LoadTexture(const char* a_Texture)
+unsigned int Sprite::LoadTexture(const char* a_Texture)
 {
 	TexThing = 0;
 
@@ -123,10 +125,30 @@ void Sprite::LoadTexture(const char* a_Texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	texLocation = glGetUniformLocation(uiShaderProg, "difTex");
-}
-Sprite::Sprite()
-{
-	printf("That's a sprite, I think\n");
+
+	unsigned int uiTextureID = 0;
+	//check file exists
+	if (a_Texture != nullptr)
+	{
+		//read in image data from file
+		unsigned char* pImageData = SOIL_load_image(a_Texture, &width, &height, 0, SOIL_LOAD_RGBA);
+
+		//check for successful read
+		if (pImageData)
+		{
+			unsigned char* image = SOIL_load_image(a_Texture, &width, &height, 0, SOIL_LOAD_RGBA);
+			glBindTexture(GL_TEXTURE_2D, TexThing);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+			SOIL_free_image_data(image);
+		}
+
+		//check for errors
+		if (uiTextureID == 0)
+		{
+			std::cerr << "SOIL loading error: " << SOIL_last_result() << std::endl;
+		}
+		return uiTextureID;
+	}
 }
 Sprite::~Sprite()
 {

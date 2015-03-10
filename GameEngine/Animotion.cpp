@@ -47,16 +47,14 @@ void Animotion::loadAnimotionUV(const char* a_File, AnimationType currentState)
 		y = siblingElement->IntAttribute("y") - height;
 		Temp.Four_uv = glm::vec2(x, y);
 
-		FramesAnimated.emplace_back(Temp);
 		Temp.frameNumber++;
 	}
-	MappedFrames.emplace(std::pair<AnimationType, std::vector<frame>>(currentState, FramesAnimated));
 }
 unsigned int Animotion::CreateSprite(const char* a_fileName, int width, int height, unsigned int shader)
 {
 	Sprite s = Sprite(a_fileName, width, height);
 	s.uiShaderProg = shader;
-	SpriteList.push_back(s);
+	SpriteList.emplace_back(s);
 
 	return SpriteList.size() - 1;
 }
@@ -73,9 +71,5 @@ void Animotion::MoveSprite(unsigned int s, float x, float y)
 void Animotion::UpdateVertex(unsigned int s)
 {
 	SpriteList[s].vertices[0].uv[0] = 0;
-	SpriteList[s].vertices[0].uv[1] = 0.2;
-}
-void Animotion::UpdateAnimotion()
-{
-	deltaTime = currentFrame - lastFrame;
+	SpriteList[s].vertices[0].uv[1] = 1.0;
 }

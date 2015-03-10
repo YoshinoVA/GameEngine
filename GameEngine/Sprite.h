@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <iostream>
 #include <map>
 
 struct vertex
@@ -25,8 +26,8 @@ class Sprite
 		Sprite(const char* a_file, int width, int height);
 		Sprite();
 		~Sprite();
-		void LoadTexture(const char* a_Texture);
-		int spriteID = 1;
+		unsigned int LoadTexture(const char* a_Texture);
+		unsigned int spriteID;
 		void Draw();
 		float x = 25;
 		float y = 25;
