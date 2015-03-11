@@ -100,12 +100,16 @@ int main()
 	s->uiShaderProg = shaderProgram;
 	s->LoadTexture("ice.png");*/
 
-	Sprite* c = new Sprite("cirno walk.png", screenWidth /2, screenHeight /2, 406, 58);
+	Sprite* c = new Sprite("MegamanXSheet.png", 0, 0, 56, 56);
 	c->uiShaderProg = shaderProgram;
 	//c->LoadTexture("cirno walk.png");
 
 	Animotion* q = new Animotion();
 	q->sprite = c;
+	c->aniMate = q;
+	c->LoadTexture("MegamanXSheet.png");
+	c->aniMate->ImportSheet("MegamanXSheet.xml");
+	c->aniMate->setAnimation("run", LOOP);
 	//q->spriteID = q->CreateSprite("cirno walk.png", 406, 58, shaderProgram);
 
 	while (!glfwWindowShouldClose(window))
@@ -119,11 +123,14 @@ int main()
 		// Draw a bunch of rocks and shit
 		glUseProgram(shaderProgram);
 		//c->Draw();
-		q->MoveSprite( 406, 58);
+		q->MoveSprite(screenWidth / 2, screenHeight / 2);
 		q->DrawSprite();
+		
+		c->aniMate->playAnimation();
 		//s->Draw();
 		
 		glfwPollEvents();
+		resetDeltaTime();
 	}
 	glDeleteProgram(shaderProgram);
 	glDeleteShader(fragmentShader);

@@ -83,13 +83,23 @@
     <Image Include="BaSingSe.png" />
     <Image Include="cirno walk.png" />
     <Image Include="ice.png" />
+    <Image Include="MegamanXSheet.png" />
     <Image Include="Western Air Temple.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animotion.h" />
     <ClInclude Include="MathStuffandShit.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="tinyxml2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameEngine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="cirno walk.xml" />
+    <Xml Include="MegamanXAnimations.xml" />
+    <Xml Include="MegamanXSheet.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

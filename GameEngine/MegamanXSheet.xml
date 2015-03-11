@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<atlas width= "512" height= "512" sheet="../resources/MegamanXSheet.png" animations= "../resources/MegamanXAnimations.xml">
+<atlas width= "512" height= "512" sheet="MegamanXSheet.png" animotion= "MegamanXAnimations.xml">
 
 <sprite name ="tport 0" x0 = "0" x1 ="7" y0 ="0" y1="48"/>
 <sprite name ="tport 1" x0 = "12" x1 ="33" y0 ="19" y1="48"/>

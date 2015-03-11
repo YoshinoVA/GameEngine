@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include "Animotion.h"
 
 struct vertex
 {
@@ -34,6 +35,7 @@ class Sprite
 		float width;
 		float height;
 		vertex vertices[4];
+		Animotion * aniMate;
 		GLuint uiShaderProg;
 		GLuint uiVBO;
 		GLuint uiIBO;

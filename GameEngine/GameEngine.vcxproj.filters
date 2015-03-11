@@ -52,6 +52,9 @@
     <Image Include="ice.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="MegamanXSheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -66,5 +69,24 @@
     <ClInclude Include="Animotion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameEngine.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="cirno walk.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="MegamanXSheet.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="MegamanXAnimations.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

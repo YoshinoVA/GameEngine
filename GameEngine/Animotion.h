@@ -3,8 +3,9 @@
 #include <map>
 #include "glew\glew.h"
 #include "glfw\glfw3.h"
-#include "sprite.h"
+#include <vector>
 #include "tinyxml2.h"
+#include "glm/glm.hpp"
 
 class Sprite;
 
@@ -42,6 +43,9 @@ struct AniSprite
 class Animotion
 {
 public:
+	Animotion();
+	~Animotion();
+
 	double deltaTime, lastFrame = 0;
 	std::vector<Sprite> SpriteList;
 	std::map<std::string, AniSprite> sprites;
@@ -60,8 +64,8 @@ public:
 	void UpdateVertex();
 	void UpdateAnimotion();
 	PlayType currentPlayType;
+	glm::vec2 * spriteScale;
 
-	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement *docAtlas, *firstElement, *siblingElement;
 
 	Atlas atlas;

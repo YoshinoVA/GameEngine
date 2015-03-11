@@ -1,11 +1,24 @@
 #include "animotion.h"
+#include "sprite.h"
 
 double deltaTime = 0;
 int frames;
 double fps, elapsedTime;
 
+Animotion::Animotion()
+{
+	spriteScale = new glm::vec2();
+}
+
+Animotion::~Animotion()
+{
+
+}
+
 void Animotion::dumptostdout(const char* a_File)
 {
+	tinyxml2::XMLDocument doc;
+
 	int status = doc.LoadFile(a_File);
 
 	if (status != tinyxml2::XML_NO_ERROR)
@@ -21,14 +34,31 @@ void Animotion::dumptostdout(const char* a_File)
 }
 void Animotion::setSprite()
 {
-	sprite->vertices[0].uv[0] = sprites["idle"].x0 / atlas.width;
-	sprite->vertices[0].uv[1] = sprites["idle"].y0 / atlas.height;
-	sprite->vertices[1].uv[0] = sprites["idle"].x1 / atlas.width;
-	sprite->vertices[1].uv[1] = sprites["idle"].y0 / atlas.height;
-	sprite->vertices[2].uv[0] = sprites["idle"].x0 / atlas.width;
-	sprite->vertices[2].uv[1] = sprites["idle"].y1 / atlas.height;
-	sprite->vertices[3].uv[0] = sprites["idle"].x1 / atlas.width;
-	sprite->vertices[3].uv[1] = sprites["idle"].y1 / atlas.height;
+	if (currentAnimotion == "")
+	{
+		sprite->vertices[0].uv[0] = sprites["idle"].x1 / atlas.width;
+		sprite->vertices[0].uv[1] = sprites["idle"].y1 / atlas.height;
+		sprite->vertices[1].uv[0] = sprites["idle"].x0 / atlas.width;
+		sprite->vertices[1].uv[1] = sprites["idle"].y1 / atlas.height;
+		sprite->vertices[2].uv[0] = sprites["idle"].x1 / atlas.width;
+		sprite->vertices[2].uv[1] = sprites["idle"].y0 / atlas.height;
+		sprite->vertices[3].uv[0] = sprites["idle"].x0 / atlas.width;
+		sprite->vertices[3].uv[1] = sprites["idle"].y0 / atlas.height;
+
+		spriteScale->x = sprites[currentSprite].width;
+		spriteScale->y = sprites[currentSprite].height;
+	}
+	else
+	{
+		sprite->vertices[0].uv[0] = sprites[currentSprite].x0 / atlas.width;
+		sprite->vertices[0].uv[1] = sprites[currentSprite].y0 / atlas.height;
+		sprite->vertices[1].uv[0] = sprites[currentSprite].x1 / atlas.width;
+		sprite->vertices[1].uv[1] = sprites[currentSprite].y0 / atlas.height;
+		sprite->vertices[2].uv[0] = sprites[currentSprite].x1 / atlas.width;
+		sprite->vertices[2].uv[1] = sprites[currentSprite].y1 / atlas.height;
+		sprite->vertices[3].uv[0] = sprites[currentSprite].x0 / atlas.width;
+		sprite->vertices[3].uv[1] = sprites[currentSprite].y1 / atlas.height;
+	}
 }
 void Animotion::ImportSheet(const char* a_SpriteSheet)
 {
@@ -79,7 +109,7 @@ void Animotion::LoadAnimations(const char* a_AnimationSheet)
 	tinyxml2::XMLElement *childElement, *child;
 	std::string str, aniName;
 	doc.LoadFile(a_AnimationSheet);
-	rootNode = doc.FirstChildElement("animotion");
+	rootNode = doc.FirstChildElement("animation");
 	currentNode = rootNode;
 
 	for (childElement = currentNode->ToElement();
@@ -168,6 +198,8 @@ void Animotion::playAnimation()
 			default:
 				break;
 			}
+
+			setSprite();
 		}
 }
 unsigned int Animotion::CreateSprite(const char* a_fileName, int width, int height, unsigned int shader)
@@ -188,14 +220,6 @@ void Animotion::MoveSprite(float x, float y)
 	sprite->y = y;
 	//SpriteList[s].x = x;
 	//SpriteList[s].y = y;
-	UpdateVertex();
-}
-void Animotion::UpdateVertex()
-{
-	/*SpriteList[s].vertices[0].uv[0] = 0;
-	SpriteList[s].vertices[0].uv[1] = 1.0;
-	SpriteList[s].vertices[1].uv[0] = 1.0;
-	SpriteList[s].vertices[1].uv[1] = 1.7;*/
 }
 double getDeltaTime()
 {
