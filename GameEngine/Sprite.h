@@ -4,7 +4,7 @@
 #include "glew\glew.h"
 #include "glew\wglew.h"
 #include "soil/soil.h"
-#include "glm/glm.hpp"
+#include "glm\glm.hpp"
 #include "glm\gtc\type_ptr.hpp"
 #include "tinyxml2.h"
 #include <vector>
@@ -23,14 +23,16 @@ struct vertex
 class Sprite
 {
 	public:
-		Sprite(const char* a_file, int width, int height);
+		Sprite(const char* a_file, float xPos, float yPos, float newWidth, float newHeight);
 		Sprite();
 		~Sprite();
 		unsigned int LoadTexture(const char* a_Texture);
 		unsigned int spriteID;
 		void Draw();
-		float x = 25;
-		float y = 25;
+		float x;
+		float y;
+		float width;
+		float height;
 		vertex vertices[4];
 		GLuint uiShaderProg;
 		GLuint uiVBO;

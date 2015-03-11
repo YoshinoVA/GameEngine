@@ -1,5 +1,9 @@
 #include "animotion.h"
 
+double deltaTime = 0;
+int frames;
+double fps, elapsedTime;
+
 void Animotion::dumptostdout(const char* a_File)
 {
 	int status = doc.LoadFile(a_File);
@@ -15,61 +19,198 @@ void Animotion::dumptostdout(const char* a_File)
 		printf("Time to turn in a shit project");
 	}
 }
-void Animotion::loadAnimotionUV(const char* a_File, AnimationType currentState)
+void Animotion::setSprite()
 {
-	dumptostdout(a_File);
-	docAtlas = doc.FirstChildElement();
-	firstElement = docAtlas->FirstChildElement();
-	frame Temp;
+	sprite->vertices[0].uv[0] = sprites["idle"].x0 / atlas.width;
+	sprite->vertices[0].uv[1] = sprites["idle"].y0 / atlas.height;
+	sprite->vertices[1].uv[0] = sprites["idle"].x1 / atlas.width;
+	sprite->vertices[1].uv[1] = sprites["idle"].y0 / atlas.height;
+	sprite->vertices[2].uv[0] = sprites["idle"].x0 / atlas.width;
+	sprite->vertices[2].uv[1] = sprites["idle"].y1 / atlas.height;
+	sprite->vertices[3].uv[0] = sprites["idle"].x1 / atlas.width;
+	sprite->vertices[3].uv[1] = sprites["idle"].y1 / atlas.height;
+}
+void Animotion::ImportSheet(const char* a_SpriteSheet)
+{
+	LoadSprite(a_SpriteSheet);
+	LoadAnimations(atlas.sAnimations.c_str());
 
-	for (siblingElement = firstElement; siblingElement != nullptr; siblingElement = siblingElement->NextSiblingElement())
+	frames = (1.0 / 15.0);
+	currentAnimotion = "";
+	currentSprite = "idle";
+	currentFrame = 0;
+	currentPlayType = SINGLE;
+	setSprite();
+}
+void Animotion::LoadSprite(const char* a_SpriteSheet)
+{
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLNode *rootNode, *currentNode;
+	tinyxml2::XMLElement *childElement;
+	std::string str;
+	doc.LoadFile(a_SpriteSheet);
+	rootNode = doc.FirstChildElement("atlas");
+	currentNode = rootNode;
+
+	childElement = currentNode->ToElement();
+	atlas.width = (float)childElement->IntAttribute("width");
+	atlas.height = (float)childElement->IntAttribute("height");
+	atlas.sSheet = childElement->Attribute("sheet");
+	atlas.sAnimations = childElement->Attribute("animotion");
+
+	for (childElement = currentNode->FirstChildElement();
+		childElement != NULL; childElement = childElement->NextSiblingElement())
 	{
-		int x, y, width, height;
-		width = siblingElement->IntAttribute("width");
-		height = siblingElement->IntAttribute("height");
-
-		//Vert 1
-		x = siblingElement->IntAttribute("x");
-		y = siblingElement->IntAttribute("y") - height;
-		Temp.One_uv = glm::vec2(x, y);
-
-		//Vert 2
-		x = siblingElement->IntAttribute("x");
-		Temp.Two_uv = glm::vec2(x, y);
-
-		//Vert 3
-		x = siblingElement->IntAttribute("x") + width;
-		y = siblingElement->IntAttribute("y");
-		Temp.Three_uv = glm::vec2(x, y);
-
-		//Vert 4
-		x = siblingElement->IntAttribute("x") + width;
-		y = siblingElement->IntAttribute("y") - height;
-		Temp.Four_uv = glm::vec2(x, y);
-
-		Temp.frameNumber++;
+		str = childElement->Attribute("name");
+		sprites[str].Name = str;
+		sprites[str].x0 = childElement->IntAttribute("x0");
+		sprites[str].x1 = childElement->IntAttribute("x1");
+		sprites[str].y0 = childElement->IntAttribute("y0");
+		sprites[str].y1 = childElement->IntAttribute("y1");
+		sprites[str].height = sprites[str].y1 - sprites[str].y0;
+		sprites[str].width = sprites[str].x1 - sprites[str].x0;
 	}
+std:printf("Sprite load done!\n");
+}
+void Animotion::LoadAnimations(const char* a_AnimationSheet)
+{
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLNode *rootNode, *currentNode;
+	tinyxml2::XMLElement *childElement, *child;
+	std::string str, aniName;
+	doc.LoadFile(a_AnimationSheet);
+	rootNode = doc.FirstChildElement("animotion");
+	currentNode = rootNode;
+
+	for (childElement = currentNode->ToElement();
+		childElement != NULL; childElement = childElement->NextSiblingElement())
+	{
+		aniName = childElement->Attribute("name");
+		int i = 0;
+		for (child = childElement->FirstChildElement();
+			child != NULL; child = child->NextSiblingElement())
+		{
+			str = child->Attribute("name");
+			animotion[aniName].push_back(str);
+			i++;
+		}
+	std:printf("Animation load done!\n");
+	}
+}
+void Animotion::setAnimation(std::string animation, PlayType type)
+{
+	currentAnimotion = animation;
+	currentFrame = 0;
+	loopFrame = 0;
+	currentPlayType = type;
+	switch (type){
+	case ONCE:
+		break;
+	case LOOP:
+		loopFrame = 0;
+		break;
+	case LOOPSECTION:
+		setAnimation(animation, type);
+	case SINGLE:
+		break;
+	}
+	currentSprite = animotion.at(currentAnimotion)[currentFrame];
+	setSprite();
+}
+void Animotion::setAnimotion(std::string animation, PlayType type, int frame)
+{
+	switch (type)
+	{
+	case LOOPSECTION:
+		currentAnimotion = animation;
+		currentFrame = 0;
+		currentPlayType = type;
+		loopFrame = frame;
+		break;
+	default:
+		setAnimation(animation, type);
+		break;
+	}
+}
+void Animotion::playAnimation()
+{
+		elapsedTime += getDeltaTime();
+
+		if (elapsedTime > frames){
+			elapsedTime = 0;
+			switch (currentPlayType){
+			case ONCE:
+				if (animotion.at(currentAnimotion)[currentFrame] != animotion.at(currentAnimotion).back())
+				{
+					currentFrame++;
+					currentSprite = animotion.at(currentAnimotion)[currentFrame];
+				}
+				break;
+			case LOOPSECTION:
+			case LOOP:
+				if (animotion.at(currentAnimotion)[currentFrame] == animotion.at(currentAnimotion).back())
+				{
+					currentFrame = loopFrame;
+					currentSprite = animotion.at(currentAnimotion)[currentFrame];
+				}
+				else
+				{
+					currentFrame++;
+					currentSprite = animotion.at(currentAnimotion)[currentFrame];
+				}
+				break;
+			case REVERSE:
+				currentFrame = animotion[currentAnimotion].size();
+				loopFrame = currentFrame;
+				break;
+			case SINGLE:
+				break;
+			default:
+				break;
+			}
+		}
 }
 unsigned int Animotion::CreateSprite(const char* a_fileName, int width, int height, unsigned int shader)
 {
-	Sprite s = Sprite(a_fileName, width, height);
+	Sprite s = Sprite(a_fileName, 0, 0, width, height);
 	s.uiShaderProg = shader;
 	SpriteList.emplace_back(s);
 
 	return SpriteList.size() - 1;
 }
-void Animotion::DrawSprite(unsigned int s)
+void Animotion::DrawSprite()
 {
-	SpriteList[s].Draw();
+	sprite->Draw();
 }
-void Animotion::MoveSprite(unsigned int s, float x, float y)
+void Animotion::MoveSprite(float x, float y)
 {
-	SpriteList[s].x = x;
-	SpriteList[s].y = y;
-	UpdateVertex(s);
+	sprite->x = x;
+	sprite->y = y;
+	//SpriteList[s].x = x;
+	//SpriteList[s].y = y;
+	UpdateVertex();
 }
-void Animotion::UpdateVertex(unsigned int s)
+void Animotion::UpdateVertex()
 {
-	SpriteList[s].vertices[0].uv[0] = 0;
+	/*SpriteList[s].vertices[0].uv[0] = 0;
 	SpriteList[s].vertices[0].uv[1] = 1.0;
+	SpriteList[s].vertices[1].uv[0] = 1.0;
+	SpriteList[s].vertices[1].uv[1] = 1.7;*/
 }
+double getDeltaTime()
+{
+	return deltaTime;
+}
+void resetDeltaTime()
+{
+	deltaTime = glfwGetTime();
+	elapsedTime += deltaTime;
+	frames++;
+	if (elapsedTime > 0.25)
+	{
+		fps = (double)frames / elapsedTime;
+		elapsedTime = 0;
+		frames = 0;
+	}
+	glfwSetTime(0);
+};

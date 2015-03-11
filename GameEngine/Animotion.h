@@ -1,6 +1,8 @@
 #ifndef _ANIMATION_H_
 #define _ANIMATION_H_
 #include <map>
+#include "glew\glew.h"
+#include "glfw\glfw3.h"
 #include "sprite.h"
 #include "tinyxml2.h"
 
@@ -11,14 +13,19 @@ enum AnimationType
 	walk,
 	idle
 };
-struct frame
+enum PlayType
 {
-	unsigned int frameNumber;
-	glm::vec2 One_uv;
-	glm::vec2 Two_uv;
-	glm::vec2 Three_uv;
-	glm::vec2 Four_uv;
+	ONCE,
+	LOOP,
+	LOOPSECTION,
+	REVERSE,
+	RANDOMLOOP,
+	RANDOM,
+	SINGLE
 };
+
+typedef std::vector<std::string> frame;
+
 struct Atlas
 {
 	float width, height;
@@ -31,31 +38,45 @@ struct AniSprite
 	float width, height;
 	float x0, x1, y0, y1;
 };
+
 class Animotion
 {
 public:
-	double currentFrame, deltaTime, lastFrame = 0;
+	double deltaTime, lastFrame = 0;
 	std::vector<Sprite> SpriteList;
 	std::map<std::string, AniSprite> sprites;
 	std::map<std::string, frame> animotion;
-	unsigned int spriteID;
+	std::string currentAnimotion, currentSprite;
+	int currentFrame;
+	int loopFrame;
+	
 	unsigned int CreateSprite(const char* a_fileName, int width, int height, unsigned int shader);
-	void DrawSprite(unsigned int s);
-	void MoveSprite(unsigned int s, float x, float y);
+	void DrawSprite();
+	void MoveSprite(float x, float y);
+	void setSprite();
+	void ImportSheet(const char* a_SpriteSheet);
 	void LoadSprite(const char* a_SpriteSheet);
-	void UpdateVertex(unsigned int s);
+	void LoadAnimations(const char* a_AnimationSheet);
+	void UpdateVertex();
 	void UpdateAnimotion();
+	PlayType currentPlayType;
 
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement *docAtlas, *firstElement, *siblingElement;
 
 	Atlas atlas;
+	Sprite * sprite;
 
-	void loadAnimotionUV(const char* a_File, AnimationType currentState);
-	void playAnimation(AnimationType desiredState);
-	void createAnimotion(const char* a_File, AnimationType currentState, float width, float height);
+	void setAnimation(std::string animation, PlayType type);
+	void setAnimotion(std::string animation, PlayType type, int a_frame);
+	void playAnimation();
+
+	double elapsedTime = 0;
 
 	void dumptostdout(const char* a_File);
 };
+
+double getDeltaTime();
+void resetDeltaTime();
 
 #endif

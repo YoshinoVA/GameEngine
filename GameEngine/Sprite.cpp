@@ -1,13 +1,21 @@
 #include "Sprite.h"
 
+#include "MathStuffandShit.h"
+#include <glm\glm.hpp>
 
-Sprite::Sprite(const char* a_file, int width, int height)
+
+Sprite::Sprite(const char* a_file, float xPos, float yPos, float newWidth, float newHeight)
 {
+	x = xPos;
+	y = yPos;
+	width = newWidth;
+	height = newHeight;
+
 	printf("That's a sprite, I think\n");
 
-	// vertex 1
-	vertices[0].Position[0] = x + width *0.5;
-	vertices[0].Position[1] = y + height *0.5;
+	// vertex 1 - top left
+	vertices[0].Position[0] = x;
+	vertices[0].Position[1] = y;
 	vertices[0].Position[2] = 0.0f;
 	vertices[0].Position[3] = 1.0f;
 	vertices[0].color[0] = 1.0f;
@@ -17,9 +25,9 @@ Sprite::Sprite(const char* a_file, int width, int height)
 	vertices[0].uv[0] = 0.0f;
 	vertices[0].uv[1] = 0.0f;
 
-	//vertex 2
-	vertices[1].Position[0] = x - width *0.5;
-	vertices[1].Position[1] = y + height *0.5;
+	//vertex 2 - top right
+	vertices[1].Position[0] = x + width;
+	vertices[1].Position[1] = y;
 	vertices[1].Position[2] = 0.0f;
 	vertices[1].Position[3] = 1.0f;
 	vertices[1].color[0] = 1.0f;
@@ -29,9 +37,9 @@ Sprite::Sprite(const char* a_file, int width, int height)
 	vertices[1].uv[0] = 1.0f;
 	vertices[1].uv[1] = 0.0f;
 
-	//vertex 3
-	vertices[2].Position[0] = x + width *0.5;
-	vertices[2].Position[1] = y - height *0.5;
+	//vertex 3 - bottom right
+	vertices[2].Position[0] = x + width;
+	vertices[2].Position[1] = y + height;
 	vertices[2].Position[2] = 0.0f;
 	vertices[2].Position[3] = 1.0f;
 	vertices[2].color[0] = 1.0f;
@@ -41,9 +49,9 @@ Sprite::Sprite(const char* a_file, int width, int height)
 	vertices[2].uv[0] = 1.0f;
 	vertices[2].uv[1] = 1.0f;
 
-	//vertex 4
-	vertices[3].Position[0] = x - width *0.5;
-	vertices[3].Position[1] = y - height *0.5;
+	//vertex  - bottom left
+	vertices[3].Position[0] = x;
+	vertices[3].Position[1] = y + height;
 	vertices[3].Position[2] = 0.0f;
 	vertices[3].Position[3] = 1.0f;
 	vertices[3].color[0] = 1.0f;
@@ -76,6 +84,21 @@ Sprite::Sprite(const char* a_file, int width, int height)
 }
 void Sprite::Draw()
 {
+	vertices[0].Position[0] = x;
+	vertices[0].Position[1] = y;
+
+	vertices[1].Position[0] = x + width;
+	vertices[1].Position[1] = y;
+
+	vertices[2].Position[0] = x + width;
+	vertices[2].Position[1] = y + height;
+
+	vertices[3].Position[0] = x;
+	vertices[3].Position[1] = y + height;
+
+	glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
 	glEnable(GL_BLEND);
 	glEnable(GL_ALPHA_TEST);
 
@@ -95,6 +118,12 @@ void Sprite::Draw()
 	GLint texAttrib = glGetAttribLocation(uiShaderProg, "texcoord");
 	glEnableVertexAttribArray(texAttrib);
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(8 * sizeof(float)));
+
+	glm::mat4 mvp;
+	MathStuff::getOrtho(0, 1024, 720, 0, -1, 1, mvp);
+
+	GLint mvpAttrib = glGetUniformLocation(uiShaderProg, "mvp_matrix");
+	glUniformMatrix4fv(mvpAttrib, 1, GL_FALSE, glm::value_ptr(mvp));
 
 	glVertexAttribPointer(posAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), 0);
 	glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float)* 4));
@@ -149,6 +178,10 @@ unsigned int Sprite::LoadTexture(const char* a_Texture)
 		}
 		return uiTextureID;
 	}
+}
+Sprite::Sprite()
+{
+
 }
 Sprite::~Sprite()
 {

@@ -18,12 +18,14 @@ const GLchar* vertexSource =
 "in vec4 position;"
 "in vec4 color;"
 "in vec2 texcoord;"
+"uniform mat4 mvp_matrix;"
 "out vec4 Color;"
 "out vec2 Texcoord;"
 "void main() {"
 "   Color = color;"
 "   Texcoord = texcoord;"
-"   gl_Position = position;"
+"   gl_Position = mvp_matrix * position;"
+//"   gl_Position = position;"
 "}";
 const GLchar* fragmentSource =
 "#version 150 core\n"
@@ -98,12 +100,13 @@ int main()
 	s->uiShaderProg = shaderProgram;
 	s->LoadTexture("ice.png");*/
 
-	/*Sprite* c = new Sprite();
+	Sprite* c = new Sprite("cirno walk.png", screenWidth /2, screenHeight /2, 406, 58);
 	c->uiShaderProg = shaderProgram;
-	c->LoadTexture("cirno walk.png");*/
+	//c->LoadTexture("cirno walk.png");
 
 	Animotion* q = new Animotion();
-	q->spriteID = q->CreateSprite("cirno walk.png", 406, 58, shaderProgram);
+	q->sprite = c;
+	//q->spriteID = q->CreateSprite("cirno walk.png", 406, 58, shaderProgram);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -116,8 +119,8 @@ int main()
 		// Draw a bunch of rocks and shit
 		glUseProgram(shaderProgram);
 		//c->Draw();
-		q->MoveSprite(q->spriteID, 406, 58);
-		q->DrawSprite(q->spriteID);
+		q->MoveSprite( 406, 58);
+		q->DrawSprite();
 		//s->Draw();
 		
 		glfwPollEvents();
