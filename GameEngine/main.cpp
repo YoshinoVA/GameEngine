@@ -67,7 +67,7 @@ int main()
 	int screenWidth = 1024;
 	int screenHeight = 720;
 
-	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, "I'm really feeling it", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, ":3", nullptr, nullptr);
 
 	glfwMakeContextCurrent(window);
 

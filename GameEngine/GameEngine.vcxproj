@@ -75,9 +75,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animotion.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathStuffandShit.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Tank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="BaSingSe.png" />
@@ -88,9 +90,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animotion.h" />
+    <ClInclude Include="graph.h" />
     <ClInclude Include="MathStuffandShit.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="tank.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
