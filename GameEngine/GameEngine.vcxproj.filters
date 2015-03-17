@@ -46,12 +46,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Western Air Temple.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BaSingSe.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="cirno walk.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -59,6 +53,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="MegamanXSheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Pictures\Tiles\gridtiles.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

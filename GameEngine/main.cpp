@@ -8,6 +8,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Sprite.h"
 #include "Animotion.h"
+#include "Graph.h"
 #include <fstream>
 #include <iostream>
 #include <ctime>
@@ -95,40 +96,44 @@ int main()
 	glLinkProgram(shaderProgram);
 	glUseProgram(shaderProgram);
 
-	//gameworks
-	/*Sprite* s = new Sprite();
-	s->uiShaderProg = shaderProgram;
-	s->LoadTexture("ice.png");*/
+	//Nodes
+	Graph graph;
+	GraphNode * node1 = new GraphNode(1);
+	GraphNode * node2 = new GraphNode(2);
+	GraphNode * node3 = new GraphNode(3);
 
-	Sprite* c = new Sprite("MegamanXSheet.png", 0, 0, 56, 56);
-	c->uiShaderProg = shaderProgram;
-	//c->LoadTexture("cirno walk.png");
+	Edge edge;
 
-	Animotion* q = new Animotion();
-	q->sprite = c;
-	c->aniMate = q;
-	c->LoadTexture("MegamanXSheet.png");
-	c->aniMate->ImportSheet("MegamanXSheet.xml");
-	c->aniMate->setAnimation("run", LOOP);
-	//q->spriteID = q->CreateSprite("cirno walk.png", 406, 58, shaderProgram);
+	graph.AddNode(node1);
+	graph.AddNode(node2);
+	graph.AddNode(node3);
+
+	edge.a_Start = node1;
+	edge.a_End = node3;
+	edge.a_Cost = 2;
+	
+	Edge edge2;
+	edge2.a_Start = node1;
+	edge2.a_End = node2;
+	edge2.a_Cost = 3;
+
+	node1->a_Edge.push_back(edge);
+	node1->a_Edge.push_back(edge2);
+
+	//Graph::Graph(shaderProgram);
+
+	node1->PrintNeigh();
+
+	std::cout << "Success? " << graph.searchDFS(node2, node3);
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwSwapBuffers(window);
 
 		// Clear the screen to black
-		glClearColor(0.1f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Draw a bunch of rocks and shit
-		glUseProgram(shaderProgram);
-		//c->Draw();
-		q->MoveSprite(screenWidth / 2, screenHeight / 2);
-		q->DrawSprite();
-		
-		c->aniMate->playAnimation();
-		//s->Draw();
-		
 		glfwPollEvents();
 		resetDeltaTime();
 	}

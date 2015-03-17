@@ -82,11 +82,10 @@
     <ClCompile Include="Tank.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="BaSingSe.png" />
+    <Image Include="..\..\..\..\Pictures\Tiles\gridtiles.png" />
     <Image Include="cirno walk.png" />
     <Image Include="ice.png" />
     <Image Include="MegamanXSheet.png" />
-    <Image Include="Western Air Temple.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animotion.h" />
