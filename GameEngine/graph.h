@@ -45,9 +45,10 @@ public:
 	void drawGrid();
 
 	bool searchDFS(GraphNode* a_Start, GraphNode* a_End);
+	Sprite * sprite;
 
 private:
-	Animotion Sprite;
+	
 	NodeList Node;
 	int NodeNumbers;
 };

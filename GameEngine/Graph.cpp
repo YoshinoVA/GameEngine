@@ -5,11 +5,6 @@ Graph::Graph()
 
 }
 
-Graph::Graph(unsigned int shaderProg)
-{
-	Sprite.CreateSprite("gridtiles.png", 800, 800, shaderProg);
-}
-
 GraphNode::GraphNode()
 {
 

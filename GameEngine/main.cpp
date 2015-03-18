@@ -120,9 +120,9 @@ int main()
 	node1->a_Edge.push_back(edge);
 	node1->a_Edge.push_back(edge2);
 
-	//Graph::Graph(shaderProgram);
-
 	node1->PrintNeigh();
+
+	graph.sprite = new Sprite("gridtiles.png", 100, 100, 800, 800);
 
 	std::cout << "Success? " << graph.searchDFS(node2, node3);
 
@@ -133,6 +133,8 @@ int main()
 		// Clear the screen to black
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		graph.sprite->Draw();
 
 		glfwPollEvents();
 		resetDeltaTime();

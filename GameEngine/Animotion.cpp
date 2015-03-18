@@ -218,8 +218,6 @@ void Animotion::MoveSprite(float x, float y)
 {
 	sprite->x = x;
 	sprite->y = y;
-	//SpriteList[s].x = x;
-	//SpriteList[s].y = y;
 }
 double getDeltaTime()
 {
