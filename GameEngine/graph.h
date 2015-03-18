@@ -28,9 +28,14 @@ public:
 	GraphNode(int a_Num);
 	void PrintNeigh();
 
+	float gScore, fScore;
+	bool lock = false;
+	int numbers;
+
 	int	a_NodeNum;
 	EdgeList a_Edge;
 	bool a_Visited;
+	GraphNode* LastNode;
 };
 class Graph
 {
@@ -43,12 +48,14 @@ public:
 	void RemoveNode(GraphNode* a_Node);
 	void resetVisited();
 	void drawGrid();
+	bool NodeCompareG(const GraphNode* left, const GraphNode* right);
+	bool NodeComparef(const GraphNode* left, const GraphNode* right);
 
 	bool searchDFS(GraphNode* a_Start, GraphNode* a_End);
+	bool searchDijkstra(GraphNode* a_Start, GraphNode* a_End);
 	Sprite * sprite;
 
 private:
-	
 	NodeList Node;
 	int NodeNumbers;
 };

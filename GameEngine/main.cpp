@@ -65,8 +65,8 @@ int main()
 {
 	glfwInit();
 
-	int screenWidth = 1024;
-	int screenHeight = 720;
+	int screenWidth = 1080;
+	int screenHeight = 800;
 
 	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, ":3", nullptr, nullptr);
 
@@ -122,9 +122,11 @@ int main()
 
 	node1->PrintNeigh();
 
-	graph.sprite = new Sprite("gridtiles.png", 100, 100, 800, 800);
+	graph.sprite = new Sprite("gridtiles.png", 1, 1, 800, 800);
+	graph.sprite->uiShaderProg = shaderProgram;
 
-	std::cout << "Success? " << graph.searchDFS(node2, node3);
+	std::cout << "Success? " << graph.searchDFS(node1, node3) << std::endl;
+	std::cout << "And? " << graph.searchDijkstra(node1, node2) << std::endl;
 
 	while (!glfwWindowShouldClose(window))
 	{
