@@ -149,6 +149,108 @@ bool Graph::searchDijkstra(GraphNode* a_Start, GraphNode* a_End)
 	return false;
 }
 
+bool Graph::searchAStar(GraphNode* a_Start, GraphNode* a_End, float inAdmissible)
+{
+	std::list<GraphNode*> NodeQueue;
+	for (NodeList::iterator nodeIter = Node.begin(); nodeIter != Node.end(); nodeIter++)
+	{
+		(*nodeIter)->LastNode = NULL;
+		(*nodeIter)->gScore = INFINITY;
+		(*nodeIter)->fScore = INFINITY;
+	}
+	NodeQueue.push_back(a_Start);
+	a_Start->LastNode = NodeQueue.back();
+	a_Start->gScore = 0;
+	a_Start->fScore = 0;
+	int checkCount = 0;
+	while (!NodeQueue.empty())
+	{
+		GraphNode* Current = NodeQueue.front();
+		NodeQueue.pop_front();
+
+		Current->numbers = 2;
+		Current->a_Visited = true;
+		if (Current == a_End)
+		{
+			GraphNode* Retrace = a_End;
+			while (Retrace != a_Start)
+			{
+				Retrace->numbers = 1;
+
+				Retrace = Retrace->LastNode;
+			}
+			a_Start->numbers = 3;
+			a_End->numbers = 3;
+			return true;
+		}
+		for (int i = 0; i < Current->a_Edge.size(); i++)
+		{
+			if (Current->a_Edge[i].a_End->a_Visited == false && Current->a_Edge[i].a_End->lock == false)
+			{
+				int Hx = 0;
+				int Hy = 0;
+				NodeQueue.push_back(Current->a_Edge[i].a_End);
+				Current->a_Edge[i].a_End->gScore = (Current->gScore + Current->a_Edge[i].a_Cost);
+				Hx = abs(a_End->x - Current->a_Edge[i].a_End->x);
+				Hy = abs(a_End->y - Current->a_Edge[i].a_End->y);
+				Current->a_Edge[i].a_End->fScore = Current->a_Edge[i].a_End->gScore + ((Hx + Hy) * (inAdmissible + 1));
+				Current->a_Edge[i].a_End->LastNode = Current;
+			}
+		}
+	}
+	return false;
+}
+
+bool Graph::searchThetaStar(GraphNode* a_Start, GraphNode* a_End, float inadmissible)
+{
+	std::list<GraphNode*> NodeQueue;
+	for (NodeList::iterator nodeIter = Node.begin(); nodeIter != Node.end(); nodeIter++)
+	{
+		(*nodeIter)->LastNode = NULL;
+		(*nodeIter)->gScore = INFINITY;
+		(*nodeIter)->fScore = INFINITY;
+	}
+	NodeQueue.push_back(a_Start);
+	a_Start->gScore = 0;
+	a_Start->fScore = 0;
+	int checkCount = 0;
+	while (!NodeQueue.empty()) {
+		GraphNode* Current = NodeQueue.front();
+		NodeQueue.pop_front();
+
+		checkCount++;
+		Current->numbers = 2;
+		Current->a_Visited = true;
+		if (Current == a_End)
+		{
+			GraphNode* Retrace = a_End;
+			while (Retrace != a_Start)
+			{
+				Retrace->numbers = 1;
+
+				Retrace = Retrace->LastNode;
+			}
+			a_Start->numbers = 3;
+			a_End->numbers = 3;
+			return true;
+		}
+		for (int i = 0; i < Current->a_Edge.size(); i++)
+		{
+			if (Current->a_Edge[i].a_End->a_Visited == false)
+			{
+				int Hx = 0;
+				int Hy = 0;
+				NodeQueue.push_back(Current->a_Edge[i].a_End);
+				Current->a_Edge[i].a_End->gScore = (Current->gScore + Current->a_Edge[i].a_Cost);
+				Hx = abs(a_End->x - Current->a_Edge[i].a_End->x);
+				Hy = abs(a_End->y - Current->a_Edge[i].a_End->y);
+				Current->a_Edge[i].a_End->fScore = Current->a_Edge[i].a_End->gScore + ((Hx + Hy) * (inadmissible + 1));
+			}
+		}
+	}
+	return false;
+}
+
 GraphNode::GraphNode(int a_Num)
 {
 	a_NodeNum = a_Num;

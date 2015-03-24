@@ -127,6 +127,8 @@ int main()
 
 	std::cout << "Success? " << graph.searchDFS(node1, node3) << std::endl;
 	std::cout << "And? " << graph.searchDijkstra(node1, node2) << std::endl;
+	std::cout << "Pls. " << graph.searchAStar(node1, node2, 0) << std::endl;
+	std::cout << "K, So? " << graph.searchThetaStar(node1, node2, 0) << std::endl;
 
 	while (!glfwWindowShouldClose(window))
 	{

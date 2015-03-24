@@ -31,6 +31,7 @@ public:
 	float gScore, fScore;
 	bool lock = false;
 	int numbers;
+	int x, y;
 
 	int	a_NodeNum;
 	EdgeList a_Edge;
@@ -53,6 +54,8 @@ public:
 
 	bool searchDFS(GraphNode* a_Start, GraphNode* a_End);
 	bool searchDijkstra(GraphNode* a_Start, GraphNode* a_End);
+	bool searchAStar(GraphNode* a_Start, GraphNode* a_End, float inAdmissible);
+	bool searchThetaStar(GraphNode* a_Start, GraphNode* a_End, float inadmissible);
 	Sprite * sprite;
 
 private:
