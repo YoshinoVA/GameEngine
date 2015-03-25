@@ -40,7 +40,6 @@ public:
 };
 class Graph
 {
-	
 public:
 	Graph();
 	Graph(unsigned int a_NodeCount);
@@ -51,6 +50,8 @@ public:
 	void drawGrid();
 	bool NodeCompareG(const GraphNode* left, const GraphNode* right);
 	bool NodeComparef(const GraphNode* left, const GraphNode* right);
+	void drawNodes();
+	void generateNodes(int a_Row, int a_Col);
 
 	bool searchDFS(GraphNode* a_Start, GraphNode* a_End);
 	bool searchDijkstra(GraphNode* a_Start, GraphNode* a_End);

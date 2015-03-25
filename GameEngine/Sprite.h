@@ -34,6 +34,7 @@ class Sprite
 		float y;
 		float width;
 		float height;
+		void makeGrid();
 		vertex vertices[4];
 		Animotion * aniMate;
 		GLuint uiShaderProg;

@@ -98,37 +98,11 @@ int main()
 
 	//Nodes
 	Graph graph;
-	GraphNode * node1 = new GraphNode(1);
-	GraphNode * node2 = new GraphNode(2);
-	GraphNode * node3 = new GraphNode(3);
 
-	Edge edge;
+	graph.generateNodes(10, 10);
 
-	graph.AddNode(node1);
-	graph.AddNode(node2);
-	graph.AddNode(node3);
-
-	edge.a_Start = node1;
-	edge.a_End = node3;
-	edge.a_Cost = 2;
-	
-	Edge edge2;
-	edge2.a_Start = node1;
-	edge2.a_End = node2;
-	edge2.a_Cost = 3;
-
-	node1->a_Edge.push_back(edge);
-	node1->a_Edge.push_back(edge2);
-
-	node1->PrintNeigh();
-
-	graph.sprite = new Sprite("gridtiles.png", 1, 1, 800, 800);
+	graph.sprite = new Sprite("gridtiles\\tile1.png", 100, 100, 64, 64);
 	graph.sprite->uiShaderProg = shaderProgram;
-
-	std::cout << "Success? " << graph.searchDFS(node1, node3) << std::endl;
-	std::cout << "And? " << graph.searchDijkstra(node1, node2) << std::endl;
-	std::cout << "Pls. " << graph.searchAStar(node1, node2, 0) << std::endl;
-	std::cout << "K, So? " << graph.searchThetaStar(node1, node2, 0) << std::endl;
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -138,7 +112,7 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		graph.sprite->Draw();
+		graph.drawNodes();
 
 		glfwPollEvents();
 		resetDeltaTime();

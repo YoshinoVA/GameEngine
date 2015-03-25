@@ -2,7 +2,7 @@
 
 Graph::Graph()
 {
-
+	
 }
 
 GraphNode::GraphNode()
@@ -77,6 +77,65 @@ void Graph::resetVisited()
 		else
 		{
 			(*nodeIter)->numbers = 4;
+		}
+	}
+}
+
+void Graph::drawNodes()
+{
+	for (int i = 0; i < Node.size(); i++)
+	{
+		sprite->x = Node[i]->x;
+		sprite->y = Node[i]->y;
+		sprite->Draw();
+	}
+}
+
+void Graph::generateNodes(int Rows, int Cols)
+{
+	for (int i = 0; i < Rows; i++)
+	{
+		for (int j = 0; j < Cols; j++)
+		{
+			Node.push_back(new GraphNode());
+			Node.back()->x = i * 64;
+			Node.back()->y = j * 64;
+		}
+	}
+	Edge newEdge;
+	for (int i = 0; i < Node.size(); i++)
+	{
+		//check left side
+		if (i % Cols != 0)
+		{
+			newEdge.a_Start = Node[i];
+			newEdge.a_End = Node[i-1];
+			newEdge.a_Cost = 1;
+			Node[i]->a_Edge.push_back(newEdge);
+		}
+		// check right side
+		if (i % Rows-1 != 0)
+		{
+			newEdge.a_Start = Node[i];
+			newEdge.a_End = Node[i*1];
+			newEdge.a_Cost = 1;
+			Node[i]->a_Edge.push_back(newEdge);
+		}
+		//check top
+		if (i > Rows-1)
+		{
+			newEdge.a_Start = Node[i];
+			newEdge.a_End = Node[i-1];
+			newEdge.a_Cost = 1;
+			Node[i]->a_Edge.push_back(newEdge);
+		}
+		//check bottom
+		if (i < Rows)
+		{
+			newEdge.a_Start = Node[i];
+			newEdge.a_End = Node[i+1];
+			newEdge.a_Cost = 1;
+			Node[i]->a_Edge.push_back(newEdge);
 		}
 	}
 }
