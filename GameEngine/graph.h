@@ -5,8 +5,10 @@
 #include <stack>
 #include <list>
 #include <iostream>
+#include "glm\glm.hpp"
 #include "sprite.h"
 #include "animotion.h"
+#include "time.h"
 
 class GraphNode;
 struct Edge;
@@ -37,6 +39,7 @@ public:
 	EdgeList a_Edge;
 	bool a_Visited;
 	GraphNode* LastNode;
+	Sprite * sprite;
 };
 class Graph
 {
@@ -52,15 +55,19 @@ public:
 	bool NodeComparef(const GraphNode* left, const GraphNode* right);
 	void drawNodes();
 	void generateNodes(int a_Row, int a_Col);
+	void createPath();
 
 	bool searchDFS(GraphNode* a_Start, GraphNode* a_End);
 	bool searchDijkstra(GraphNode* a_Start, GraphNode* a_End);
 	bool searchAStar(GraphNode* a_Start, GraphNode* a_End, float inAdmissible);
 	bool searchThetaStar(GraphNode* a_Start, GraphNode* a_End, float inadmissible);
 	Sprite * sprite;
+	Sprite * visitedSprite;
+	Sprite * player;
 
 private:
 	NodeList Node;
+	EdgeList edge;
 	int NodeNumbers;
 };
 

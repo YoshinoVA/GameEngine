@@ -79,13 +79,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathStuffandShit.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Tank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Pictures\Tiles\gridtiles.png" />
     <Image Include="cirno walk.png" />
     <Image Include="ice.png" />
     <Image Include="MegamanXSheet.png" />
+    <Image Include="player.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animotion.h" />
@@ -93,7 +93,6 @@
     <ClInclude Include="MathStuffandShit.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="tank.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>

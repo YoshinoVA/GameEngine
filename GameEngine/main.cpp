@@ -68,7 +68,7 @@ int main()
 	int screenWidth = 1080;
 	int screenHeight = 800;
 
-	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, ":3", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, "I'm really feeling it", nullptr, nullptr);
 
 	glfwMakeContextCurrent(window);
 
@@ -98,11 +98,16 @@ int main()
 
 	//Nodes
 	Graph graph;
+	GraphNode graphThings;
 
 	graph.generateNodes(10, 10);
 
 	graph.sprite = new Sprite("gridtiles\\tile1.png", 100, 100, 64, 64);
+	graph.visitedSprite = new Sprite("gridtiles\\visitedTiles.png", 100, 100, 64, 64);
+	graph.player = new Sprite("player.png", 5, 3, 34, 58);
 	graph.sprite->uiShaderProg = shaderProgram;
+	graph.visitedSprite->uiShaderProg = shaderProgram;
+	graph.player->uiShaderProg = shaderProgram;
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -113,6 +118,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		graph.drawNodes();
+		graph.player->Draw();
 
 		glfwPollEvents();
 		resetDeltaTime();

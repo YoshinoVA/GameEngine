@@ -1,0 +1,3 @@
+loop over path
+
+check if hit end or not

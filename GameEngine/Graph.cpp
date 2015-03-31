@@ -87,7 +87,15 @@ void Graph::drawNodes()
 	{
 		sprite->x = Node[i]->x;
 		sprite->y = Node[i]->y;
-		sprite->Draw();
+
+		if (Node[i]->a_Visited)
+		{
+			visitedSprite->Draw();
+		}
+		else
+		{
+			sprite->Draw();
+		}
 	}
 }
 
@@ -114,7 +122,7 @@ void Graph::generateNodes(int Rows, int Cols)
 			Node[i]->a_Edge.push_back(newEdge);
 		}
 		// check right side
-		if (i % Rows-1 != 0)
+		if (i % Cols-1 != 0)
 		{
 			newEdge.a_Start = Node[i];
 			newEdge.a_End = Node[i*1];
@@ -130,13 +138,21 @@ void Graph::generateNodes(int Rows, int Cols)
 			Node[i]->a_Edge.push_back(newEdge);
 		}
 		//check bottom
-		if (i < Rows)
+		if (i < Rows-1)
 		{
 			newEdge.a_Start = Node[i];
 			newEdge.a_End = Node[i+1];
 			newEdge.a_Cost = 1;
 			Node[i]->a_Edge.push_back(newEdge);
 		}
+	}
+}
+
+void Graph::createPath()
+{
+	for (int i = 0; i < Node.size(); i++)
+	{
+		
 	}
 }
 
