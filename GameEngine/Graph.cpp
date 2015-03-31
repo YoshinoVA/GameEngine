@@ -72,11 +72,11 @@ void Graph::resetVisited()
 		(*nodeIter)->a_Visited = false;
 		if ((*nodeIter)->lock == false)
 		{
-			(*nodeIter)->numbers = 0;
+			(*nodeIter)->data = 0;
 		}
 		else
 		{
-			(*nodeIter)->numbers = 4;
+			(*nodeIter)->data = 4;
 		}
 	}
 }
@@ -85,15 +85,18 @@ void Graph::drawNodes()
 {
 	for (int i = 0; i < Node.size(); i++)
 	{
-		sprite->x = Node[i]->x;
-		sprite->y = Node[i]->y;
-
 		if (Node[i]->a_Visited)
 		{
+			visitedSprite->x = Node[i]->x;
+			visitedSprite->y = Node[i]->y;
+
 			visitedSprite->Draw();
 		}
 		else
 		{
+			sprite->x = Node[i]->x;
+			sprite->y = Node[i]->y;
+
 			sprite->Draw();
 		}
 	}
@@ -101,6 +104,8 @@ void Graph::drawNodes()
 
 void Graph::generateNodes(int Rows, int Cols)
 {
+	int NodeNum = 0;
+
 	for (int i = 0; i < Rows; i++)
 	{
 		for (int j = 0; j < Cols; j++)
@@ -108,12 +113,14 @@ void Graph::generateNodes(int Rows, int Cols)
 			Node.push_back(new GraphNode());
 			Node.back()->x = i * 64;
 			Node.back()->y = j * 64;
+			Node.back()->a_NodeNum = NodeNum;
+			NodeNum += 1;
 		}
 	}
 	Edge newEdge;
 	for (int i = 0; i < Node.size(); i++)
 	{
-		//check left side
+		//check top side
 		if (i % Cols != 0)
 		{
 			newEdge.a_Start = Node[i];
@@ -122,14 +129,14 @@ void Graph::generateNodes(int Rows, int Cols)
 			Node[i]->a_Edge.push_back(newEdge);
 		}
 		// check right side
-		if (i % Cols-1 != 0)
+		if (i < Rows * Cols - Cols)
 		{
 			newEdge.a_Start = Node[i];
-			newEdge.a_End = Node[i*1];
+			newEdge.a_End = Node[i+Rows];
 			newEdge.a_Cost = 1;
 			Node[i]->a_Edge.push_back(newEdge);
 		}
-		//check top
+		//check left
 		if (i > Rows-1)
 		{
 			newEdge.a_Start = Node[i];
@@ -138,7 +145,7 @@ void Graph::generateNodes(int Rows, int Cols)
 			Node[i]->a_Edge.push_back(newEdge);
 		}
 		//check bottom
-		if (i < Rows-1)
+		if (((i+1) % Rows) != 0)
 		{
 			newEdge.a_Start = Node[i];
 			newEdge.a_End = Node[i+1];
@@ -148,16 +155,27 @@ void Graph::generateNodes(int Rows, int Cols)
 	}
 }
 
-void Graph::createPath()
+std::vector<GraphNode*> Graph::returnPath()
 {
-	for (int i = 0; i < Node.size(); i++)
+	GraphNode * currentNode = lastDestination;
+
+	std::vector<GraphNode*> nodeVec;
+
+	//loop until we get to the beginning
+	while (currentNode != lastStart)
 	{
-		
+		nodeVec.push_back(currentNode->LastNode);
+		currentNode = currentNode->LastNode;
 	}
+	std::reverse(nodeVec.begin(), nodeVec.end());
+	return nodeVec;
 }
 
 bool Graph::searchDFS(GraphNode* a_Start, GraphNode* a_End)
 {
+	lastStart = a_Start;
+	lastDestination = a_End;
+
 	std::stack<GraphNode*> oNodeStack;
 	oNodeStack.push(a_Start);
 
@@ -176,8 +194,11 @@ bool Graph::searchDFS(GraphNode* a_Start, GraphNode* a_End)
 		{
 			return true;
 		}
-		for (int i = 0; i < pCurrent->a_Edge.size(); ++i)
+		for (int i = 0; i < pCurrent->a_Edge.size(); i++)
 		{
+			if (pCurrent->a_Edge[i].a_End->LastNode == NULL)
+				pCurrent->a_Edge[i].a_End->LastNode = pCurrent;
+
 			oNodeStack.push(pCurrent->a_Edge[i].a_End);
 		}
 	}
@@ -243,19 +264,19 @@ bool Graph::searchAStar(GraphNode* a_Start, GraphNode* a_End, float inAdmissible
 		GraphNode* Current = NodeQueue.front();
 		NodeQueue.pop_front();
 
-		Current->numbers = 2;
+		Current->data = 2;
 		Current->a_Visited = true;
 		if (Current == a_End)
 		{
 			GraphNode* Retrace = a_End;
 			while (Retrace != a_Start)
 			{
-				Retrace->numbers = 1;
+				Retrace->data = 1;
 
 				Retrace = Retrace->LastNode;
 			}
-			a_Start->numbers = 3;
-			a_End->numbers = 3;
+			a_Start->data = 3;
+			a_End->data = 3;
 			return true;
 		}
 		for (int i = 0; i < Current->a_Edge.size(); i++)
@@ -294,19 +315,19 @@ bool Graph::searchThetaStar(GraphNode* a_Start, GraphNode* a_End, float inadmiss
 		NodeQueue.pop_front();
 
 		checkCount++;
-		Current->numbers = 2;
+		Current->data = 2;
 		Current->a_Visited = true;
 		if (Current == a_End)
 		{
 			GraphNode* Retrace = a_End;
 			while (Retrace != a_Start)
 			{
-				Retrace->numbers = 1;
+				Retrace->data = 1;
 
 				Retrace = Retrace->LastNode;
 			}
-			a_Start->numbers = 3;
-			a_End->numbers = 3;
+			a_Start->data = 3;
+			a_End->data = 3;
 			return true;
 		}
 		for (int i = 0; i < Current->a_Edge.size(); i++)

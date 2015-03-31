@@ -1,25 +1,19 @@
-﻿Build started 3/25/2015 12:30:10 PM.
+﻿Build started 3/31/2015 4:00:18 PM.
      1>Project "C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\GameEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Graph.cpp main.cpp
-         Graph.cpp
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(86): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(88): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(89): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(114): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(153): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(186): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(220): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(268): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(319): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(343): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Animotion.cpp Graph.cpp MathStuffandShit.cpp Sprite.cpp main.cpp
+         Animotion.cpp
+     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
+                 c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\include\glfw\glfw3.h(96) : see previous definition of 'APIENTRY'
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(68): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(96): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(97): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(98): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(99): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(103): warning C4102: 'std' : unreferenced label
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(127): warning C4102: 'std' : unreferenced label
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\animotion.cpp(207): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
          Generating Code...
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(200): warning C4756: overflow in constant arithmetic
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(200): warning C4756: overflow in constant arithmetic
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(240): warning C4756: overflow in constant arithmetic
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(241): warning C4756: overflow in constant arithmetic
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(292): warning C4756: overflow in constant arithmetic
-     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(293): warning C4756: overflow in constant arithmetic
          Compiling...
          main.cpp
      1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(1): warning C4005: 'GLEW_STATIC' : macro redefinition
@@ -27,7 +21,34 @@
      1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
                  c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\include\glfw\glfw3.h(96) : see previous definition of 'APIENTRY'
      1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(76): warning C4552: '!=' : operator has no effect; expected operator with side-effect
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(112): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(134): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(136): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\main.cpp(137): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         Sprite.cpp
+         MathStuffandShit.cpp
+     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
+                 c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\include\glfw\glfw3.h(96) : see previous definition of 'APIENTRY'
+         Graph.cpp
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(86): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(90): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(91): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(97): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(98): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(121): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(197): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(234): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(282): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(333): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(357): warning C4018: '<' : signed/unsigned mismatch
          Generating Code...
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(214): warning C4756: overflow in constant arithmetic
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(254): warning C4756: overflow in constant arithmetic
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(255): warning C4756: overflow in constant arithmetic
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(214): warning C4756: overflow in constant arithmetic
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(306): warning C4756: overflow in constant arithmetic
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\graph.cpp(307): warning C4756: overflow in constant arithmetic
+     1>c:\users\austin.hollenbeck\documents\github\gameengine\gameengine\sprite.cpp(181): warning C4715: 'Sprite::LoadTexture' : not all control paths return a value
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\Debug\GameEngine.exe" /INCREMENTAL /NOLOGO glfw3.lib opengl32.lib glew32s.lib SOIL.lib tinyxml2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\Debug\GameEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\austin.hollenbeck\Documents\GitHub\GameEngine\GameEngine\Debug\GameEngine.lib" /MACHINE:X86 Debug\GameEngine.res
          Debug\Animotion.obj
@@ -40,4 +61,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.94
+Time Elapsed 00:00:04.14

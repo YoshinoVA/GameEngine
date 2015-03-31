@@ -4,6 +4,7 @@
 #include <vector>
 #include <stack>
 #include <list>
+#include <algorithm>
 #include <iostream>
 #include "glm\glm.hpp"
 #include "sprite.h"
@@ -32,7 +33,7 @@ public:
 
 	float gScore, fScore;
 	bool lock = false;
-	int numbers;
+	int data;
 	int x, y;
 
 	int	a_NodeNum;
@@ -55,7 +56,7 @@ public:
 	bool NodeComparef(const GraphNode* left, const GraphNode* right);
 	void drawNodes();
 	void generateNodes(int a_Row, int a_Col);
-	void createPath();
+	std::vector<GraphNode*> returnPath();
 
 	bool searchDFS(GraphNode* a_Start, GraphNode* a_End);
 	bool searchDijkstra(GraphNode* a_Start, GraphNode* a_End);
@@ -65,8 +66,11 @@ public:
 	Sprite * visitedSprite;
 	Sprite * player;
 
-private:
+	GraphNode * lastStart;
+	GraphNode * lastDestination;
 	NodeList Node;
+
+private:
 	EdgeList edge;
 	int NodeNumbers;
 };

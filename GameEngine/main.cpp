@@ -99,11 +99,23 @@ int main()
 	//Nodes
 	Graph graph;
 	GraphNode graphThings;
+	
+	//std::cout << graph.returnPath() << std::endl;
 
 	graph.generateNodes(10, 10);
 
+	bool result = graph.searchDFS(graph.Node[1], graph.Node[99]);
+	std::vector<GraphNode *> path = graph.returnPath();
+
+
+	std::cout << "--PATH--\n";
+	for (int i = 0; i < path.size(); i++)
+	{
+		std::cout << path[i]->a_NodeNum << "\n";
+	}
+
 	graph.sprite = new Sprite("gridtiles\\tile1.png", 100, 100, 64, 64);
-	graph.visitedSprite = new Sprite("gridtiles\\visitedTiles.png", 100, 100, 64, 64);
+	graph.visitedSprite = new Sprite("gridtiles\\visitedTile.png", 100, 100, 64, 64);
 	graph.player = new Sprite("player.png", 5, 3, 34, 58);
 	graph.sprite->uiShaderProg = shaderProgram;
 	graph.visitedSprite->uiShaderProg = shaderProgram;
@@ -118,7 +130,13 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		graph.drawNodes();
-		graph.player->Draw();
+
+		for (int i = 0; i < path.size(); i++)
+		{
+			graph.player->x = path[i]->x;
+			graph.player->y = path[i]->y;
+			graph.player->Draw();
+		}
 
 		glfwPollEvents();
 		resetDeltaTime();

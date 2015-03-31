@@ -6,6 +6,7 @@
 #include "soil/soil.h"
 #include "glm\glm.hpp"
 #include "glm\gtc\type_ptr.hpp"
+#include "glm\matrix.hpp"
 #include "tinyxml2.h"
 #include <vector>
 #include <string>
@@ -13,6 +14,8 @@
 #include <iostream>
 #include <map>
 #include "Animotion.h"
+#include <ctime>
+#include "time.h"
 
 struct vertex
 {
@@ -46,4 +49,10 @@ class Sprite
 		GLuint texLocation;
 };
 
+class Tank: public Sprite
+{
+	void Seek();
+	
+	bool reachedNode();
+};
 #endif

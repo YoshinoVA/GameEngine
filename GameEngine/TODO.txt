@@ -1,3 +1,5 @@
-loop over path
+vector of all the nodes
 
-check if hit end or not
+move from one node to other node
+
+know when reached a node
