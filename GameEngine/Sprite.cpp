@@ -208,7 +208,6 @@ void Tank::Update()
 		}
 	}
 	// if we're close enough, switch targets to the next node
-
 }
 void Tank::Seek()
 {
@@ -224,6 +223,51 @@ Tank::Tank()
 
 }
 Tank::~Tank()
+{
+
+}
+void SteerBehav::Update()
+{
+	x += Velocity.x * getDeltaTime();
+	y += Velocity.y * getDeltaTime();
+
+	float dist = glm::distance(glm::vec2(target->x, target->y), glm::vec2(x, y));
+
+	if (dist < 100.f)
+	{
+		if (target->x, target->y != x, y)
+		{
+			
+		}
+	}
+}
+void SteerBehav::Seek2()
+{
+	Velocity = glm::normalize(glm::vec2(target->x, target->y) - (glm::vec2(x, y))) * maxVelocity;
+}
+void SteerBehav::Flee()
+{
+	Velocity = glm::normalize(glm::vec2(x, y)) - (glm::vec2(target->x, target->y)) * maxVelocity;
+
+}
+void SteerBehav::Wander()
+{
+
+}
+void SteerBehav::Arrive()
+{
+	
+
+}
+SteerBehav::SteerBehav(const char* a_file, float xPos, float yPos, float newWidth, float newHeight) : Sprite(a_file, xPos, yPos, newWidth, newHeight)
+{
+
+}
+SteerBehav::SteerBehav()
+{
+
+}
+SteerBehav::~SteerBehav()
 {
 
 }

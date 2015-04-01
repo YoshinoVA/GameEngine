@@ -161,13 +161,18 @@ std::vector<GraphNode*> Graph::returnPath()
 
 	std::vector<GraphNode*> nodeVec;
 
+	
+
 	//loop until we get to the beginning
 	while (currentNode != lastStart)
 	{
 		nodeVec.push_back(currentNode->LastNode);
 		currentNode = currentNode->LastNode;
 	}
+	nodeVec.push_back(lastStart);
 	std::reverse(nodeVec.begin(), nodeVec.end());
+
+	nodeVec.push_back(lastDestination);
 	return nodeVec;
 }
 

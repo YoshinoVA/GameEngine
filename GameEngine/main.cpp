@@ -104,15 +104,16 @@ int main()
 
 	graph.generateNodes(10, 10);
 
-	bool result = graph.searchDFS(graph.Node[1], graph.Node[99]);
+	bool result = graph.searchDFS(graph.Node[0], graph.Node[99]);
 	std::vector<GraphNode *> path = graph.returnPath();
 
+	//std::cout << "--PATH--\n";
+	//for (int i = 0; i < path.size(); i++)
+	//{
+	//	std::cout << path[i]->a_NodeNum << "\n";
+	//}
 
-	std::cout << "--PATH--\n";
-	for (int i = 0; i < path.size(); i++)
-	{
-		std::cout << path[i]->a_NodeNum << "\n";
-	}
+	
 
 	graph.sprite = new Sprite("gridtiles\\tile1.png", 100, 100, 64, 64);
 	graph.visitedSprite = new Sprite("gridtiles\\visitedTile.png", 100, 100, 64, 64);
@@ -126,6 +127,12 @@ int main()
 	tank.path = path;
 	tank.uiShaderProg = shaderProgram;
 
+	SteerBehav steer("player.png", 5, 3, 34, 58);
+	Sprite target("ice.png", 600, 400, 200, 174);
+	steer.target = &target;
+	steer.uiShaderProg = shaderProgram;
+	target.uiShaderProg = shaderProgram;
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwSwapBuffers(window);
@@ -134,11 +141,57 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		graph.drawNodes();
+		//graph.drawNodes();
 
-		tank.Draw();
+		/*tank.Draw();
 		tank.Update();
-		tank.Seek();
+		tank.Seek();*/
+
+		target.Draw();
+
+		//moves target left
+		if (glfwGetKey(window, GLFW_KEY_A))
+		{
+			target.x -= 2.f;
+			if (target.x < 16.f)
+			{
+				target.x = 16.f;
+			}
+		}
+
+		//moves target right
+		if (glfwGetKey(window, GLFW_KEY_D))
+		{
+			target.x += 2.f;
+			if (target.x > 800 - 16.f)
+			{
+				target.x = 800 - 16.f;
+			}
+		}
+
+		//moves target down
+		if (glfwGetKey(window, GLFW_KEY_S))
+		{
+			target.y += 2.f;
+			if (target.y > screenHeight)
+			{
+				target.y = 32.f;
+			}
+		}
+
+		//moves target up, although it doesn't
+		if (glfwGetKey(window, GLFW_KEY_W))
+		{
+			target.x += 2.f;
+			if (target.y > -screenHeight)
+			{
+				target.y = 32.f;
+			}
+		}
+
+		steer.Draw();
+		steer.Update();
+		steer.Seek2();
 
 		glfwPollEvents();
 		resetDeltaTime();

@@ -56,13 +56,34 @@ public:
 	Tank(const char* a_file, float xPos, float yPos, float newWidth, float newHeight);
 	Tank();
 	~Tank();
+	glm::vec2 steer;
 	glm::vec2 Velocity;
 	float maxVelocity = 100;
 	void Update();
 	void Seek();
 
+
 	//GraphNode * Node;
 	std::vector<GraphNode *> path;	// the path we need to go
 	int currentIndex = 0;		// index of the node in the path
+};
+class SteerBehav: public Sprite
+{
+public:
+	SteerBehav(const char* a_file, float xPos, float yPos, float newWidth, float newHeight);
+	SteerBehav();
+	~SteerBehav();
+	void Update();
+	void Seek2();
+	void Flee();
+	void Wander();
+	void Arrive();
+	glm::vec2 Velocity;
+	float maxVelocity = 100;
+	Sprite * target;
+
+	//GraphNode * Node;
+	std::vector<GraphNode *> path;	// the path we need to go
+	int currentIndex = 0;
 };
 #endif
