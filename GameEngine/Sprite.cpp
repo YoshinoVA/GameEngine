@@ -3,6 +3,8 @@
 #include "MathStuffandShit.h"
 #include <glm\glm.hpp>
 
+#include "graph.h"
+
 
 Sprite::Sprite(const char* a_file, float xPos, float yPos, float newWidth, float newHeight)
 {
@@ -186,4 +188,42 @@ Sprite::Sprite()
 Sprite::~Sprite()
 {
 	printf("Mother of all that is holy...\n");
+}
+void Tank::Update()
+{
+	// changes our position based on velocity
+	x += Velocity.x * getDeltaTime();
+	y += Velocity.y * getDeltaTime();
+
+	float dist = glm::distance(glm::vec2(path[currentIndex]->x, path[currentIndex]->y), glm::vec2(x, y));
+
+	//std::cout << "Dist: " << dist << "\n";
+
+	// check to see if we are close enough to the node we're trying to move to
+	if(dist  < 100.f)
+	{
+		if (currentIndex+1 < path.size())
+		{
+			currentIndex += 1;
+		}
+	}
+	// if we're close enough, switch targets to the next node
+
+}
+void Tank::Seek()
+{
+	// set our velocity to point towards the node we want to go to
+	Velocity = glm::normalize(glm::vec2(path[currentIndex]->x, path[currentIndex]->y) - glm::vec2(x,y)) * maxVelocity;
+}
+Tank::Tank(const char* a_file, float xPos, float yPos, float newWidth, float newHeight) : Sprite(a_file, xPos,yPos,newWidth,newHeight)
+{
+
+}
+Tank::Tank()
+{
+
+}
+Tank::~Tank()
+{
+
 }

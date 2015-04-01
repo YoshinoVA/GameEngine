@@ -17,6 +17,8 @@
 #include <ctime>
 #include "time.h"
 
+class GraphNode;
+
 struct vertex
 {
 	float Position[4];
@@ -48,11 +50,19 @@ class Sprite
 
 		GLuint texLocation;
 };
-
 class Tank: public Sprite
 {
+public:
+	Tank(const char* a_file, float xPos, float yPos, float newWidth, float newHeight);
+	Tank();
+	~Tank();
+	glm::vec2 Velocity;
+	float maxVelocity = 100;
+	void Update();
 	void Seek();
-	
-	bool reachedNode();
+
+	//GraphNode * Node;
+	std::vector<GraphNode *> path;	// the path we need to go
+	int currentIndex = 0;		// index of the node in the path
 };
 #endif

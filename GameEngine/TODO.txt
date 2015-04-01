@@ -1,5 +1,1 @@
-vector of all the nodes
-
-move from one node to other node
-
-know when reached a node
+add first and last node

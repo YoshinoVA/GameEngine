@@ -228,7 +228,7 @@ void resetDeltaTime()
 	deltaTime = glfwGetTime();
 	elapsedTime += deltaTime;
 	frames++;
-	if (elapsedTime > 0.25)
+	if (elapsedTime > 1.25)
 	{
 		fps = (double)frames / elapsedTime;
 		elapsedTime = 0;
