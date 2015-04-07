@@ -127,7 +127,7 @@ int main()
 	tank.path = path;
 	tank.uiShaderProg = shaderProgram;
 
-	SteerBehav steer("player.png", 5, 3, 34, 58);
+	SteerBehav steer("player.png", 400, 200, 34, 58);
 	Sprite target("ice.png", 600, 400, 200, 174);
 	steer.target = &target;
 	steer.uiShaderProg = shaderProgram;
@@ -142,10 +142,6 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//graph.drawNodes();
-
-		/*tank.Draw();
-		tank.Update();
-		tank.Seek();*/
 
 		target.Draw();
 
@@ -182,16 +178,18 @@ int main()
 		//moves target up, although it doesn't
 		if (glfwGetKey(window, GLFW_KEY_W))
 		{
-			target.x += 2.f;
-			if (target.y > -screenHeight)
+			target.y -= 2.f;
+			if (target.y > screenHeight)
 			{
-				target.y = 32.f;
+				target.y = 16.f;
 			}
 		}
 
 		steer.Draw();
 		steer.Update();
-		steer.Seek2();
+		//steer.Seek2();
+		//steer.Flee();
+		steer.Arrive();
 
 		glfwPollEvents();
 		resetDeltaTime();

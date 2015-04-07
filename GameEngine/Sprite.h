@@ -62,7 +62,6 @@ public:
 	void Update();
 	void Seek();
 
-
 	//GraphNode * Node;
 	std::vector<GraphNode *> path;	// the path we need to go
 	int currentIndex = 0;		// index of the node in the path
@@ -78,8 +77,11 @@ public:
 	void Flee();
 	void Wander();
 	void Arrive();
+	glm::vec2 truncate(glm::vec2 vector, float number);
 	glm::vec2 Velocity;
-	float maxVelocity = 100;
+	float maxVelocity = 100.f;
+	float distance;
+	float slowingRadius = 100.f;
 	Sprite * target;
 
 	//GraphNode * Node;

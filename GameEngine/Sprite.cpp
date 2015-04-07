@@ -247,16 +247,38 @@ void SteerBehav::Seek2()
 }
 void SteerBehav::Flee()
 {
-	Velocity = glm::normalize(glm::vec2(x, y)) - (glm::vec2(target->x, target->y)) * maxVelocity;
-
-}
-void SteerBehav::Wander()
-{
-
+	Velocity = glm::normalize((glm::vec2(x, y)) - (glm::vec2(target->x, target->y))) * maxVelocity;
 }
 void SteerBehav::Arrive()
 {
-	
+	Velocity = truncate(Velocity, maxVelocity);
+	glm::vec2(x, y) = glm::vec2(x, y) + Velocity;
+
+	Velocity = glm::vec2(x, y) - glm::vec2(target->x, target->y);
+	distance = glm::distance(glm::vec2(x, y), glm::vec2(target->x, target->y));
+
+	if (distance < slowingRadius)
+	{
+		Velocity = glm::normalize(Velocity) * maxVelocity * (distance / slowingRadius);
+	}
+	else
+	{
+		Velocity = normalize(Velocity) * maxVelocity;
+	}
+
+	Velocity *= -1;
+}
+glm::vec2 SteerBehav::truncate(glm::vec2 vector, float number)
+{
+	float i;
+	i = number / vector.length();
+	i = i < 1.0 ? i : 1.0;
+	vector = vector * i;
+
+	return vector;
+}
+void SteerBehav::Wander()
+{
 
 }
 SteerBehav::SteerBehav(const char* a_file, float xPos, float yPos, float newWidth, float newHeight) : Sprite(a_file, xPos, yPos, newWidth, newHeight)
